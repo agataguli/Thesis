@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+    <mvc:annotation-driven enable-matrix-variables="true"/> <!-- znacznik enable-matrix-variable włącza wsparcie dla zmiennych tablicowych-->
+    <!-- za pomoca tego znacznika definiuje ze chce aby spring mvc skonfigurowal
+    beany takie jak: DefaultAnnotatioinHandelerMapping, AnnotationMethodAdapter i ExceptionHanlerExcrptionResolver
+    ktore sa niezbedne do  przekazywania przez Spring MVC żądań do kontrolerów
+     Wykonuje w tle operacje, np dostep do @NumberFormat i @DataTimeFormat,
+      udostepnia adnotacje @Valid, ktora sprawdza poprawnosc parametrow metody kontrolera
+      JEST WYMAGANY ABY DOSTAĆ DOSTĘP DO ADNOTACJI: @Controller, @RequestMapping -->
+    <context:component-scan base-package="com.thesis.visageapp" /> <!--
+     aktywacja automatycznego wykrywanie klas oznaczonych jako @Controller
+     bo servlet przeszukuje oznaczone tak klasy aby obsluzyc żądanie,
+     metody oznaczone do tego  są oznaczane przez @RequestMapping
+     TEN ZAPIS INSTUUJE SPRINGA SZUKAŁ KLAS KONTROLERÓW W TYM PAKIECIE I PODPAKIETACH w "....."-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- bean odpowiedzialny/wspomagajacy identyfikacje widoków
+    ustala sciezke do wym widoku.
+    Za pomocą tej instrukcji poinstruujemy Spring MVC aby utworzył bean'a klasy InternatResourceViewResolver
+        -->
+        <property name="prefix" value="/WEB-INF/views/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+    <bean class="org.springframework.context.support.ResourceBundleMessageSource" id="messageSource">
+        <property value="messages" name="basename"/>
+    </bean>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/visageapp" />
+        <property name="username" value="root" />
+        <property name="password" value="" />
+    </bean>
+
+</beans>
