@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * Created by Agatka on 24.10.2017.
- */
 @Controller
-@RequestMapping(value = "cart")
+@RequestMapping(value = "rest/cart")
 public class CartRestController {
     private CartService cartService;
 

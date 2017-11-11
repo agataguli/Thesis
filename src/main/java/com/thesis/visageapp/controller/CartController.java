@@ -8,12 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * Created by Agatka on 09.11.2017.
- */
-
 @Controller
-@RequestMapping(value = "rest/cart")
+@RequestMapping(value = "/cart")
 public class CartController {
 
     @RequestMapping

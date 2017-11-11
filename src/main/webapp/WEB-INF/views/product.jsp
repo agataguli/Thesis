@@ -5,6 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
         <title>product</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.1/angular.min.js"></script>
+        <script type="text/javascript" src="../resources/js/controllers.js"></script>
     </head>
     <body>
     <section>
@@ -22,7 +24,7 @@
             </div>
 
         </section>
-        <section class="container">
+        <section class="container" ng-app="cartApp">
             <div class="row">
                 <div class="col-md-5">
                     <h3>${product.brand}</h3>
@@ -31,9 +33,14 @@
                     <p><strong>available: </strong>${product.available}</p>
                     <p><strong>category: </strong>${product.category}</p>
                     <h3><strong>quantity: </strong>${product.quantity}</h3>
-                        <a href="<spring:url value="/products/changeAvailability?id=${product.productId}" />" class="btn btn-warning btn-large">
+                    <p ng-controller="cartCtrl">
+                        <a href="<spring:url value="/products/changeAvailability?id=${product.productId}" />" class="btn btn-warning btn-large"
+                        ngclick="addToCart('{product.productId}')">
                             <span class="glyphicon-shopping-productt glyphicon"></span>
                             Change availability
+                        </a>
+                        <a href="<spring:url value="/cart" />" class="btn btndefault">
+                            <span class="glyphicon-hand-right glyphicon"></span> Go to cart
                         </a>
                     </p>
                 </div>
