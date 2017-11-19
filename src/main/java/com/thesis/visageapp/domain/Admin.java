@@ -1,8 +1,5 @@
 package com.thesis.visageapp.domain;
 
-/**
- * Created by Agatka
- */
 public class Admin {
     private String adminId;
     private String login;

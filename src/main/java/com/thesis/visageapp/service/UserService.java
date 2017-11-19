@@ -2,13 +2,11 @@ package com.thesis.visageapp.service;
 
 import com.thesis.visageapp.domain.User;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by Agatka
- */
 public interface UserService {
     List<User> getAllUsers();
 
@@ -16,7 +14,7 @@ public interface UserService {
 
     Set<User> getUsersWithFilter(Map<String, List<String>> filterParams);
 
-    void addUser(User user);
+    void addUser(User user) throws SQLException;
 
     List<User> getUsersWithAvailableStatus(boolean isAvailable);
 }

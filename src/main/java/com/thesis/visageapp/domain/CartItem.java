@@ -1,12 +1,7 @@
 package com.thesis.visageapp.domain;
 
-import java.math.BigDecimal;
-
-/**
- * Created by Agatka on 24.10.2017.
- */
 public class CartItem {
-    private BigDecimal totalMultipliedItemGrossValue;
+    private Double totalMultipliedItemGrossValue;
     private Product product;
     private int quantity;
 
@@ -21,11 +16,11 @@ public class CartItem {
         this.quantity = 1;
     }
 
-    public BigDecimal getTotalMultipliedItemGrossValue() {
+    public Double getTotalMultipliedItemGrossValue() {
         return totalMultipliedItemGrossValue;
     }
 
-    public void setTotalMultipliedItemGrossValue(BigDecimal totalMultipliedItemGrossValue) {
+    public void setTotalMultipliedItemGrossValue(Double totalMultipliedItemGrossValue) {
         this.totalMultipliedItemGrossValue = totalMultipliedItemGrossValue;
     }
 

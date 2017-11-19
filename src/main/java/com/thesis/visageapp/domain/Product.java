@@ -2,34 +2,34 @@ package com.thesis.visageapp.domain;
 
 import com.sun.media.jfxmedia.logging.Logger;
 
-import org.apache.commons.logging.Log;
-
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Product {
     private String productId;
     private String name;
     private String category;
     private String brand;
-    private BigDecimal grossValue;
-    private BigDecimal netValue;
+    private Double grossValue;
+    private Double netValue;
     private String description;
     private int quantity;
     private boolean available = true;
 
     // constructors
     public Product() {
-        // empty construtor, needed to adding products by form
+        // productId is barcode
+        // I generate example pesel for men born in january 1900
         super();
     }
 
-    public Product(String productId, String name, String category, String brand, BigDecimal grossValue,
-                   BigDecimal netValue, String description, int quantity, boolean available) {
+    public Product(String productId, String name, String category, String brand, Double grossValue,
+                   Double netValue, String description, int quantity, boolean available) {
         this(productId, name, category, brand, grossValue, netValue, description, quantity);
         this.available = available;
     }
 
-    public Product(String productId, String name, String category, String brand, BigDecimal grossValue, BigDecimal netValue,
+    public Product(String productId, String name, String category, String brand, Double grossValue, Double netValue,
                    String description, int quantity) {
         this.productId = productId;
         this.name = name;
@@ -89,11 +89,11 @@ public class Product {
         return brand;
     }
 
-    public BigDecimal getGrossValue() {
+    public Double getGrossValue() {
         return grossValue;
     }
 
-    public BigDecimal getNetValue() {
+    public Double getNetValue() {
         return netValue;
     }
 
@@ -145,11 +145,11 @@ public class Product {
         this.brand = brand;
     }
 
-    public void setGrossValue(BigDecimal grossValue) {
+    public void setGrossValue(Double grossValue) {
         this.grossValue = grossValue;
     }
 
-    public void setNetValue(BigDecimal netValue) {
+    public void setNetValue(Double netValue) {
         this.netValue = netValue;
     }
 
@@ -163,5 +163,12 @@ public class Product {
 
     public void setAvailable(boolean available) {
         this.available = available;
+    }
+
+    public List getAttributesValues() {
+        List values = new ArrayList();
+        values.add(productId); values.add(name); values.add(category); values.add(brand); values.add(grossValue);
+        values.add(netValue); values.add(description); values.add(quantity); values.add(available);
+        return values;
     }
 }

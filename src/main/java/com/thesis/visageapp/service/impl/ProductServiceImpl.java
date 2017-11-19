@@ -6,13 +6,11 @@ import com.thesis.visageapp.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by Agatka
- */
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -21,32 +19,32 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        return productRepository.getAllProducts();
+        return this.productRepository.getAllProducts();
     }
 
     @Override
     public Product getProductWithId(String productId) throws IllegalAccessException {
-        return productRepository.getProductWithId(productId);
+        return this.productRepository.getProductWithId(productId);
     }
 
     @Override
     public List<Product> getProductsWithCategory(String category) {
-        return productRepository.getProductsWithCategory(category);
+        return this.productRepository.getProductsWithCategory(category);
     }
 
     @Override
     public Set<Product> getProductsWithFilter(Map<String, List<String>> filterParams) {
-        return productRepository.getProductsWithFilter(filterParams);
+        return this.productRepository.getProductsWithFilter(filterParams);
     }
 
     @Override
-    public void addProduct(Product product) {
-        productRepository.addProduct(product);
+    public void addProduct(Product product) throws SQLException {
+        this.productRepository.addProduct(product);
     }
 
     @Override
     public List<Product> getProductsWithAvailableStatus(boolean isAvailable) {
-        return productRepository.getProductsWithAvailableStatus(isAvailable);
+        return this.productRepository.getProductsWithAvailableStatus(isAvailable);
     }
 
     @Override
@@ -55,10 +53,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void changeAvailability(String productId) {
+    public void changeAvailability(String productId) throws SQLException {
         try {
-            Product productById = productRepository.getProductWithId(productId);
+            Product productById = this.productRepository.getProductWithId(productId);
             productById.changeAvailability();
+            this.productRepository.changeAvailability(productById.isAvailable(), productById.getProductId());
         } catch (IllegalAccessException e) {
             throw new IllegalArgumentException("Cannot change Availability");
         }
@@ -67,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void updateQuantityByDelivered(String productId, Integer quantity) {
         try {
-            Product productById = productRepository.getProductWithId(productId);
+            Product productById = this.productRepository.getProductWithId(productId);
             productById.updateQuantityByDelivered(quantity);
         } catch (IllegalAccessException e) {
             throw new IllegalArgumentException("Cannot change quantity");

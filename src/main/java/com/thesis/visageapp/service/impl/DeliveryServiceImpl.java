@@ -11,9 +11,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Agatka on 15.10.2017.
- */
 @Service
 public class DeliveryServiceImpl implements DeliveryService {
 

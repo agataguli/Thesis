@@ -1,8 +1,5 @@
 package com.thesis.visageapp.domain;
 
-/**
- * Created by Agatka on 15.10.2017.
- */
 public class DeliveredItem {
     private String deliveredItemId;
     private String productId;

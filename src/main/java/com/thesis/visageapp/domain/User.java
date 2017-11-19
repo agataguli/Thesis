@@ -1,8 +1,8 @@
 package com.thesis.visageapp.domain;
 
-/**
- * Created by Agatka
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private String userId;
     private String login;
@@ -172,5 +172,13 @@ public class User {
 
     public void setActive(boolean isActive) {
         this.active = isActive;
+    }
+
+    public List getAttributesValues() {
+        List values = new ArrayList();
+        values.add(userId); values.add(login); values.add(password); values.add(name); values.add(surname);
+        values.add(email); values.add(phoneNumber); values.add(country); values.add(postCode); values.add(city);
+        values.add(street); values.add(addressDetails); values.add(active);
+        return values;
     }
 }

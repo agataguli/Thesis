@@ -4,24 +4,39 @@ import com.thesis.visageapp.domain.Product;
 import com.thesis.visageapp.domain.repository.ProductRepository;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
-/**
- * Created by Agatka
- */
 @Repository
 public class InMemoryProductRepository implements ProductRepository {
     private List<Product> listOfProducts = new ArrayList<>();
 
-    // TODO: replace this fake repository with some JDBC solution, best Hibernate.
     public InMemoryProductRepository() {
-        Product product1 = new Product("1", "MBrush Foundation brush","Brush", "MBrush", new BigDecimal(89.75), new BigDecimal(70), "Foundation brush created by Maxineczka", 7, false);
-        Product product2 = new Product("2", "Brush", "NikkieTutorials fish contour brush","Nikkie", new BigDecimal(129.99), new BigDecimal(100), "Cream contour brush created by Nikkie Tutorials", 30);
-        listOfProducts.add(product1);
-        listOfProducts.add(product2);
+        this.takeAllProductsFromDatabase();
     }
 
+    private void takeAllProductsFromDatabase() {
+        MysqlConnector.connect();
+        ResultSet rs = MysqlConnector.prepareStatement(StaticQueryParts.SELECT_ALL_QUERY + StaticQueryParts.PROD_TAB_NAME);
+        Product product;
+
+        try {
+            while (rs.next()) {
+                product = new Product(
+                        rs.getString(StaticQueryParts.PROD_PRODUCT_ID), rs.getString(StaticQueryParts.PROD_NAME),
+                        rs.getString(StaticQueryParts.PROD_CATEGORY), rs.getString(StaticQueryParts.PROD_BRAND),
+                        rs.getDouble(StaticQueryParts.PROD_GROSS_VALUE), rs.getDouble(StaticQueryParts.PROD_NET_VALUE),
+                        rs.getString(StaticQueryParts.PROD_DESCRIPTION), rs.getInt(StaticQueryParts.PROD_QUANTITY),
+                        rs.getBoolean(StaticQueryParts.PROD_AVAILABLE)
+                );
+                this.listOfProducts.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        MysqlConnector.disconnect();
+    }
 
     @Override
     public List<Product> getAllProducts() {
@@ -38,7 +53,6 @@ public class InMemoryProductRepository implements ProductRepository {
             }
         }
         if (productById == null) {
-            // TODO: move all messsages and strings to property file!
             throw new IllegalAccessException("No product with id:" + productId);
         }
         return productById;
@@ -77,10 +91,11 @@ public class InMemoryProductRepository implements ProductRepository {
     }
 
     @Override
-    public void addProduct(Product product) {
+    public void addProduct(Product product) throws SQLException {
         listOfProducts.add(product);
+        String addQuery = StaticQueryParts.insertQuery(StaticQueryParts.PROD_TAB_NAME, product.getAttributesValues());
+        MysqlConnector.executeOnDatabase(addQuery);
     }
-
 
     @Override
     public List<Product> getProductsWithAvailableStatus(boolean isAvailable) {
@@ -93,13 +108,20 @@ public class InMemoryProductRepository implements ProductRepository {
 
     @Override
     public void orderProduct(String productId) {
+        // TODO: implement it! in cart area.
         try {
             Product product = this.getProductWithId(productId);
             product.orderIfAvailable();
         } catch (IllegalAccessException e) {
-            // TODO: replace blocks like this with code not blocking all server :D
             throw new IllegalArgumentException(e.getMessage());
         }
 
+    }
+
+    @Override
+    public void changeAvailability(boolean available, String productId) throws SQLException {
+        String updateQuery = StaticQueryParts.updateQuery(StaticQueryParts.PROD_TAB_NAME, StaticQueryParts.PROD_AVAILABLE,
+                String.valueOf(available), StaticQueryParts.buildCondition(StaticQueryParts.PROD_PRODUCT_ID, productId));
+        MysqlConnector.executeOnDatabase(updateQuery);
     }
 }

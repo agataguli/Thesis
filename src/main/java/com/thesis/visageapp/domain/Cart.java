@@ -1,20 +1,16 @@
 package com.thesis.visageapp.domain;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Agatka on 24.10.2017.
- */
 public class Cart {
     private String cartId;
-    private BigDecimal totalCartItemsGrossValue;
+    private Double totalCartItemsGrossValue;
     private Map<String, CartItem> cartItems;
 
     public Cart() {
         cartItems = new HashMap<String, CartItem>();
-        totalCartItemsGrossValue = new BigDecimal(0);
+        totalCartItemsGrossValue = Double.valueOf(0);
     }
 
     public Cart(String cartId) {
@@ -37,9 +33,9 @@ public class Cart {
     }
 
     private void updateTotalCartItemsGrossValue() {
-        this.totalCartItemsGrossValue = new BigDecimal(0);
+        this.totalCartItemsGrossValue = Double.valueOf(0);
         for(CartItem cartItem: cartItems.values()) {
-            this.totalCartItemsGrossValue = this.totalCartItemsGrossValue.add(cartItem.getTotalMultipliedItemGrossValue());
+            this.totalCartItemsGrossValue +=cartItem.getTotalMultipliedItemGrossValue();
         }
     }
 
@@ -51,11 +47,11 @@ public class Cart {
         this.cartId = cartId;
     }
 
-    public BigDecimal getTotalCartItemsGrossValue() {
+    public Double getTotalCartItemsGrossValue() {
         return totalCartItemsGrossValue;
     }
 
-    public void setTotalCartItemsGrossValue(BigDecimal totalCartItemsGrossValue) {
+    public void setTotalCartItemsGrossValue(Double totalCartItemsGrossValue) {
         this.totalCartItemsGrossValue = totalCartItemsGrossValue;
     }
 

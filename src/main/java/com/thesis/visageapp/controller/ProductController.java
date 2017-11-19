@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +52,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/changeAvailability")
-    public String changeAvailability(@RequestParam("id") String productId, Model model) throws IllegalAccessException {
+    public String changeAvailability(@RequestParam("id") String productId, Model model) throws IllegalAccessException, SQLException {
         productService.changeAvailability(productId);
         return "redirect:/products/all";
     }
@@ -75,7 +76,7 @@ public class ProductController {
 
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String processAddNewProductForm(@ModelAttribute("newProduct") Product productToBeAdded, ModelMap map, BindingResult result) {
+    public String processAddNewProductForm(@ModelAttribute("newProduct") Product productToBeAdded, ModelMap map, BindingResult result) throws SQLException {
         String[] suppressedFields = result.getSuppressedFields();
 
         if (suppressedFields.length > 0) {

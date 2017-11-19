@@ -4,23 +4,39 @@ import com.thesis.visageapp.domain.Admin;
 import com.thesis.visageapp.domain.repository.AdminRepository;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
-/**
- * Created by Agatka
- */
 @Repository
 public class InMemoryAdminRepository implements AdminRepository {
-
     private List<Admin> listOfAdmins = new ArrayList<>();
 
-    // TODO: replace this fake repository with some JDBC solution, best Hibernate.
     public InMemoryAdminRepository() {
-        // TODO: mocked admins
-        Admin agataAdmin = new Admin("1", "agataAdmin", "agata123", "GLOBAL_ADMIN", "Agata", "Kołtun", "agataguli@gmail.com", "737409946", true);
-        Admin ewelinaAdmin = new Admin("2", "ewelinaAdmin", "ewelina123", "GLOBAL_ADMIN", "Ewelina", "Mysiak", "exampleEwelina@gmail.com", "737409947", true);
-        listOfAdmins.add(agataAdmin);
-        listOfAdmins.add(ewelinaAdmin);
+        this.takeAllAdminsFromDatabase();
+    }
+
+    private void takeAllAdminsFromDatabase() {
+        MysqlConnector.connect();
+        ResultSet rs = MysqlConnector.prepareStatement(StaticQueryParts.SELECT_ALL_QUERY + StaticQueryParts.ADMINS_TAB_NAME);
+        Admin admin;
+
+        try {
+            while (rs.next()) {
+                // TODO: in StaticQueryParts you have column lists. Use stream!
+                admin = new Admin(
+                        rs.getString(StaticQueryParts.ADMINS_ADMIN_ID), rs.getString(StaticQueryParts.ADMINS_LOGIN),
+                        rs.getString(StaticQueryParts.ADMINS_PASSWORD), rs.getString(StaticQueryParts.ADMINS_PERMISSION_STATUS),
+                        rs.getString(StaticQueryParts.ADMINS_NAME), rs.getString(StaticQueryParts.ADMINS_SURNAME),
+                        rs.getString(StaticQueryParts.ADMINS_EMAIL), rs.getString(StaticQueryParts.ADMINS_PHONE_NUMBER),
+                        rs.getBoolean(StaticQueryParts.ADMINS_ACTIVE)
+                );
+                this.listOfAdmins.add(admin);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        MysqlConnector.disconnect();
     }
 
     @Override
@@ -38,7 +54,6 @@ public class InMemoryAdminRepository implements AdminRepository {
             }
         }
         if (adminById == null) {
-            // TODO: move all messsages and strings to property file!
             throw new IllegalAccessException("No user with id:" + adminId);
         }
         return adminById;

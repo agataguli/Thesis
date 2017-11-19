@@ -11,19 +11,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-
-/**
- * Created by Agatka
- */
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
-
-    // TODO: insert most of them in @ResponseStatus to get it
-    // TODO: get order method by no content response status
 
     @Autowired
     private UserService userService;
@@ -54,7 +48,7 @@ public class UserController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String processAddNewUserForm(@ModelAttribute("newUser") User userToBeAdded, ModelMap map,
-                                        BindingResult result) {
+                                        BindingResult result) throws SQLException {
         String[] suppressedFields = result.getSuppressedFields();
 
         if (suppressedFields.length > 0) {

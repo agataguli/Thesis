@@ -2,13 +2,11 @@ package com.thesis.visageapp.domain.repository;
 
 import com.thesis.visageapp.domain.Product;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by Agatka
- */
 public interface ProductRepository {
 
    List<Product> getAllProducts();
@@ -19,9 +17,11 @@ public interface ProductRepository {
 
    Set<Product> getProductsWithFilter(Map<String,List<String>> filterParams);
 
-   void addProduct(Product product);
+   void addProduct(Product product) throws SQLException;
 
    List<Product> getProductsWithAvailableStatus(boolean isAvailable);
 
    void orderProduct(String productId);
+
+    void changeAvailability(boolean available, String productId) throws SQLException;
 }

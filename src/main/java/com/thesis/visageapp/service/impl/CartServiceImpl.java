@@ -6,9 +6,6 @@ import com.thesis.visageapp.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by Agatka on 24.10.2017.
- */
 @Service
 public class CartServiceImpl implements CartService {
     private CartRepository cartRepository;

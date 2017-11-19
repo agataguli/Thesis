@@ -1,29 +1,43 @@
 package com.thesis.visageapp.domain.repository.impl;
 
+import com.thesis.visageapp.domain.Product;
 import com.thesis.visageapp.domain.User;
 import com.thesis.visageapp.domain.repository.UserRepository;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
-/**
- * Created by Agatka
- */
 @Repository
 public class InMemoryUserRepository implements UserRepository {
     private List<User> listOfUsers = new ArrayList<>();
 
-    // TODO: replace this fake repository with some JDBC solution, best Hibernate.
     public InMemoryUserRepository() {
-        // TODO: mocked users
-        User user1 = new User("1", "testLogin1", "Perf123", "NameTest1", "SurnameTest1",
-                "test@example.com", "111222333","Poland","22-300","Krasnystaw",
-                "Testowa", "12A/8", true);
-        User user2 = new User("2", "testLogin2", "Perf123", "NameTest2", "SurnameTest2",
-                "test@example.com", "111222333","Poland","22-300","Krasnystaw",
-                "Testowa", "200B/8", false);
-        listOfUsers.add(user1);
-        listOfUsers.add(user2);
+        this.takeAllUsersFromDatabase();
+    }
+
+    private void takeAllUsersFromDatabase() {
+        MysqlConnector.connect();
+        ResultSet rs = MysqlConnector.prepareStatement(StaticQueryParts.SELECT_ALL_QUERY + StaticQueryParts.USERS_TAB_NAME);
+        User user;
+        try {
+            while (rs.next()) {
+                user = new User(
+                        rs.getString(StaticQueryParts.USERS_USER_ID), rs.getString(StaticQueryParts.USERS_LOGIN),
+                        rs.getString(StaticQueryParts.USERS_PASSWORD), rs.getString(StaticQueryParts.USERS_NAME),
+                        rs.getString(StaticQueryParts.USERS_SURNAME), rs.getString(StaticQueryParts.USERS_EMAIL),
+                        rs.getString(StaticQueryParts.USERS_PHONE_NUMBER), rs.getString(StaticQueryParts.USERS_COUNTRY),
+                        rs.getString(StaticQueryParts.USERS_POST_CODE), rs.getString(StaticQueryParts.USERS_CITY),
+                        rs.getString(StaticQueryParts.USERS_STREET), rs.getString(StaticQueryParts.USERS_ADDRESS_DETAILS),
+                        rs.getBoolean(StaticQueryParts.USERS_ACTIVE)
+                );
+                this.listOfUsers.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        MysqlConnector.disconnect();
     }
 
     @Override
@@ -67,8 +81,11 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public void addUser(User user) {
+    public void addUser(User user) throws SQLException {
         listOfUsers.add(user);
+        String addQuery = StaticQueryParts.insertQuery(StaticQueryParts.USERS_TAB_NAME, user.getAttributesValues());
+        MysqlConnector.executeOnDatabase(addQuery);
+
     }
 
     @Override

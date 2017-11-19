@@ -7,9 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Agatka on 24.10.2017.
- */
 @Repository
 public class InMemoryCartRepository implements CartRepository {
 
@@ -18,7 +15,6 @@ public class InMemoryCartRepository implements CartRepository {
     public InMemoryCartRepository() {
         this.listOfCarts = new HashMap<>();
     }
-
 
     @Override
     public Cart create(Cart cart) {

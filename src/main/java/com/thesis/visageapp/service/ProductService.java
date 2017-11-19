@@ -2,13 +2,11 @@ package com.thesis.visageapp.service;
 
 import com.thesis.visageapp.domain.Product;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by Agatka
- */
 public interface ProductService {
     List<Product> getAllProducts();
 
@@ -18,13 +16,13 @@ public interface ProductService {
 
     Set<Product> getProductsWithFilter(Map<String, List<String>> filterParams);
 
-    void addProduct(Product product);
+    void addProduct(Product product) throws SQLException;
 
     List<Product> getProductsWithAvailableStatus(boolean isAvailable);
 
     void orderProduct(String productId);
 
-    void changeAvailability(String productId);
+    void changeAvailability(String productId) throws SQLException;
 
     void updateQuantityByDelivered(String productId, Integer quantity);
 }
