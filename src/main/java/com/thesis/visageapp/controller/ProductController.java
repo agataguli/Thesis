@@ -20,9 +20,6 @@ import java.util.Map;
 @RequestMapping("/products")
 public class ProductController {
 
-    // TODO: insert most of them in @ResponseStatus to get it
-    // TODO: get order method by no content response status
-
     @Autowired
     private ProductService productService;
 

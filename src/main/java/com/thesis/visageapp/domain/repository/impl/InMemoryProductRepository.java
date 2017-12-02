@@ -124,4 +124,12 @@ public class InMemoryProductRepository implements ProductRepository {
                 String.valueOf(available), StaticQueryParts.buildCondition(StaticQueryParts.PROD_PRODUCT_ID, productId));
         MysqlConnector.executeOnDatabase(updateQuery);
     }
+
+    @Override
+    public void changeQuantity(int quantity, String productId) throws SQLException {
+        String updateQuery = StaticQueryParts.updateQuery(StaticQueryParts.PROD_TAB_NAME, StaticQueryParts.PROD_QUANTITY,
+                String.valueOf(quantity), StaticQueryParts.buildCondition(StaticQueryParts.PROD_PRODUCT_ID, productId));
+        MysqlConnector.executeOnDatabase(updateQuery);
+
+    }
 }

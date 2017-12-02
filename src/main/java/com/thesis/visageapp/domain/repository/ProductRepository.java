@@ -24,4 +24,6 @@ public interface ProductRepository {
    void orderProduct(String productId);
 
     void changeAvailability(boolean available, String productId) throws SQLException;
+
+    void changeQuantity(int quantity, String productId) throws SQLException;
 }
