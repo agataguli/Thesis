@@ -11,7 +11,7 @@ public class HomeController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String welcome(Model model) {
         model.addAttribute("appName", "VisageApp");
-        model.addAttribute("tagline", "Please login and start!");
+        model.addAttribute("tagline", "Enjoy!");
 
         return "welcome";
     }

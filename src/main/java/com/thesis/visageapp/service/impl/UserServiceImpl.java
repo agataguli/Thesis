@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by Agatka
- */
 @Service
 public class UserServiceImpl implements UserService {
 

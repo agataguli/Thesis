@@ -2,11 +2,11 @@
 <!-- define servlet named DefaultServlet, class of servlet is made by Spring mvc and used in web.xml -->
 <!-- now DispatchedServlet is ready to performing all requests on app during apps's working and give it to any controller method-->
 <web-app
-         xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 		 http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-         version="3.0">
+        version="3.0">
     <filter>
         <filter-name>encoding-filter</filter-name>
         <filter-class>
@@ -41,13 +41,18 @@
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/spring/webcontext/security-context.xml</param-value>
+        <param-value>
+            /WEB-INF/spring/webcontext/security-context.xml
+        </param-value>
     </context-param>
 
     <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
     </listener>
 
     <filter>
@@ -56,8 +61,11 @@
             org.springframework.web.filter.DelegatingFilterProxy
         </filter-class>
     </filter>
+
     <filter-mapping>
-        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-name>
+            springSecurityFilterChain
+        </filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 

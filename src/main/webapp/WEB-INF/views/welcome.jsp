@@ -22,11 +22,15 @@
                         <span class="glyphicon-hand-left glyphicon"></span> Users
                     </a>
                     <a href="<spring:url value="/admins/all" />" class="btn btndefault">
-                        <span class="glyphicon-hand-left glyphicon"></span> Admins
+                       <span class="glyphicon-hand-left glyphicon"></span> Admins
                     </a>
                     <a href="<spring:url value="/delivery/add" />" class="btn btndefault">
                         <span class="glyphicon-hand-left glyphicon"></span> Insert delivery
                     </a>
+                </div>
+                <div>
+                <a href="<c:url value="/logout" />"
+                				class="btn btn-danger btn-mini pull-right"> Logout </a>
                 </div>
             </section>
         </body>
