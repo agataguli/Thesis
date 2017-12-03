@@ -41,4 +41,9 @@ public class UserServiceImpl implements UserService {
     public List<User> getUsersWithAvailableStatus(boolean isAvailable) {
         return userRepository.getUsersWithAvailableStatus(isAvailable);
     }
+
+    @Override
+    public User authenticateUser(String login, String password) throws SQLException {
+        return userRepository.authenticateUser(login, password);
+    }
 }

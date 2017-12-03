@@ -16,7 +16,6 @@ public class Product {
     private int quantity;
     private boolean available = true;
 
-    // constructors
     public Product() {
         // productId is barcode
         // I generate example pesel for men born in january 1900

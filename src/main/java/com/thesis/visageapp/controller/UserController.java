@@ -45,7 +45,6 @@ public class UserController {
         return "addUser";
     }
 
-
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String processAddNewUserForm(@ModelAttribute("newUser") User userToBeAdded, ModelMap map,
                                         BindingResult result) throws SQLException {

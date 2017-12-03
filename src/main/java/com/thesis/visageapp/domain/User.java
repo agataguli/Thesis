@@ -18,6 +18,8 @@ public class User {
     private String addressDetails;
     private boolean active;
 
+    public User(){};
+
     public User(String userId, String login, String password, String name, String surname, String email, String phoneNumber,
                 String country, String postCode, String city, String street, String addressDetails, boolean active) {
         this.userId = userId;
@@ -180,5 +182,11 @@ public class User {
         values.add(email); values.add(phoneNumber); values.add(country); values.add(postCode); values.add(city);
         values.add(street); values.add(addressDetails); values.add(active);
         return values;
+    }
+
+    public static User newError() {
+        User user = new User();
+        user.setUserId("ERROR");
+        return user;
     }
 }

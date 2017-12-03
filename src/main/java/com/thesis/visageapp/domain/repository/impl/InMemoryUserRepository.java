@@ -1,5 +1,6 @@
 package com.thesis.visageapp.domain.repository.impl;
 
+import com.mysql.jdbc.MySQLConnection;
 import com.thesis.visageapp.domain.Product;
 import com.thesis.visageapp.domain.User;
 import com.thesis.visageapp.domain.repository.UserRepository;
@@ -23,15 +24,7 @@ public class InMemoryUserRepository implements UserRepository {
         User user;
         try {
             while (rs.next()) {
-                user = new User(
-                        rs.getString(StaticQueryParts.USERS_USER_ID), rs.getString(StaticQueryParts.USERS_LOGIN),
-                        rs.getString(StaticQueryParts.USERS_PASSWORD), rs.getString(StaticQueryParts.USERS_NAME),
-                        rs.getString(StaticQueryParts.USERS_SURNAME), rs.getString(StaticQueryParts.USERS_EMAIL),
-                        rs.getString(StaticQueryParts.USERS_PHONE_NUMBER), rs.getString(StaticQueryParts.USERS_COUNTRY),
-                        rs.getString(StaticQueryParts.USERS_POST_CODE), rs.getString(StaticQueryParts.USERS_CITY),
-                        rs.getString(StaticQueryParts.USERS_STREET), rs.getString(StaticQueryParts.USERS_ADDRESS_DETAILS),
-                        rs.getBoolean(StaticQueryParts.USERS_ACTIVE)
-                );
+                user = this.createUserByResponse(rs);
                 this.listOfUsers.add(user);
             }
         } catch (SQLException e) {
@@ -40,15 +33,31 @@ public class InMemoryUserRepository implements UserRepository {
         MysqlConnector.disconnect();
     }
 
+    private User createUserByResponse(ResultSet rs) throws SQLException {
+        User user = null;
+        if (rs.next()) {
+            user = new User(
+                    rs.getString(StaticQueryParts.USERS_USER_ID), rs.getString(StaticQueryParts.USERS_LOGIN),
+                    rs.getString(StaticQueryParts.USERS_PASSWORD), rs.getString(StaticQueryParts.USERS_NAME),
+                    rs.getString(StaticQueryParts.USERS_SURNAME), rs.getString(StaticQueryParts.USERS_EMAIL),
+                    rs.getString(StaticQueryParts.USERS_PHONE_NUMBER), rs.getString(StaticQueryParts.USERS_COUNTRY),
+                    rs.getString(StaticQueryParts.USERS_POST_CODE), rs.getString(StaticQueryParts.USERS_CITY),
+                    rs.getString(StaticQueryParts.USERS_STREET), rs.getString(StaticQueryParts.USERS_ADDRESS_DETAILS),
+                    rs.getBoolean(StaticQueryParts.USERS_ACTIVE)
+            );
+        }
+        return user;
+    }
+
     @Override
     public List<User> getAllUsers() {
-        return listOfUsers;
+        return this.listOfUsers;
     }
 
     @Override
     public User getUserWithId(String userId) throws IllegalAccessException {
         User userById = null;
-        for (User user : listOfUsers) {
+        for (User user : this.listOfUsers) {
             if (user != null && user.getUserId() != null && user.getUserId().equals(userId)) {
                 userById = user;
                 break;
@@ -70,7 +79,7 @@ public class InMemoryUserRepository implements UserRepository {
 
         if (criteria.contains("city")) {
             for (String criteriaCase : filterParams.get("city")) {
-                for (User user : listOfUsers) {
+                for (User user : this.listOfUsers) {
                     if (criteriaCase.equalsIgnoreCase(user.getCity())) {
                         usersByCriteria.add(user);
                     }
@@ -82,7 +91,7 @@ public class InMemoryUserRepository implements UserRepository {
 
     @Override
     public void addUser(User user) throws SQLException {
-        listOfUsers.add(user);
+        this.listOfUsers.add(user);
         String addQuery = StaticQueryParts.insertQuery(StaticQueryParts.USERS_TAB_NAME, user.getAttributesValues());
         MysqlConnector.executeOnDatabase(addQuery);
 
@@ -91,9 +100,20 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public List<User> getUsersWithAvailableStatus(boolean isAvailable) {
         List<User> userList = new ArrayList<>();
-        for (User user : listOfUsers) {
+        for (User user : this.listOfUsers) {
             if (user.isActive() == isAvailable) userList.add(user);
         }
         return userList;
+    }
+
+    @Override
+    public User authenticateUser(String login, String password) throws SQLException {
+        MysqlConnector.connect();
+        String statement = StaticQueryParts.selectQuery(StaticQueryParts.USERS_TAB_NAME, StaticQueryParts.USERS_LOGIN, StaticQueryParts.USERS_PASSWORD, login, password);
+        ResultSet rs = MysqlConnector.prepareStatement(statement);
+        User user = this.createUserByResponse(rs);
+        MysqlConnector.disconnect();
+        if(user == null) user = User.newError();
+        return user;
     }
 }

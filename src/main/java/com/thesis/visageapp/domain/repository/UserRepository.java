@@ -18,4 +18,6 @@ public interface UserRepository {
     void addUser(User user) throws SQLException;
 
     List<User> getUsersWithAvailableStatus(boolean isAvailable);
+
+    User authenticateUser(String login, String password) throws SQLException;
 }

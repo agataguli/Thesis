@@ -11,6 +11,8 @@ public class StaticQueryParts {
     public final static String WHERE = " where ";
     public final static String INSERT = "insert ";
     public final static String VALUES = " values ";
+    public final static String AND = " and ";
+    public final static String OR = " or ";
 
     // table admins
     public final static String ADMINS_TAB_NAME = "admins";
@@ -56,6 +58,10 @@ public class StaticQueryParts {
     // combinations
     public static String updateQuery(String tableName, String columnName, String newValue, String condition) {
         return UPDATE + tableName + SET + columnName + " = " + newValue + WHERE + condition;
+    }
+
+    public static String selectQuery(String tableName, String columnName1, String columnName2, String condition1, String condition2) {
+        return SELECT_ALL_QUERY + tableName + WHERE + columnName1 + "='" + condition1 + "'" + AND + columnName2 + "='" + condition2 + "'";
     }
 
     public static String insertQuery(String tableName, List values) {
