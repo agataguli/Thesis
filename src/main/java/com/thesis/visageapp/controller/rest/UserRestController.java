@@ -19,4 +19,10 @@ public class UserRestController {
     public User authenticateUser(@PathVariable(value = "login") String login, @PathVariable(value = "password") String password) throws SQLException {
         return userService.authenticateUser(login,password);
     }
+
+    @RequestMapping(value = "/signupM", method = RequestMethod.POST)
+    public @ResponseBody signUpUser(@PathVariable(value = "login") String login, @PathVariable(value = "password") String password) throws SQLException {
+
+    }
+
 }
