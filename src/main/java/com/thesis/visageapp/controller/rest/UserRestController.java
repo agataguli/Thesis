@@ -22,5 +22,11 @@ public class UserRestController {
         return userService.authenticateUser(requestBody.getLogin(), requestBody.getPassword());
     }
 
+    @RequestMapping(value = "/signupM", method = RequestMethod.POST)
+    public String signupUser(@RequestBody User newUserRequestBody) throws SQLException {
+        userService.addUser(newUserRequestBody);
+        return "123123";
+    }
+
 
 }
