@@ -20,6 +20,12 @@ public class User {
 
     public User(){};
 
+    public User(String login, String password, boolean active) {
+        this.login = login;
+        this.password = password;
+        this.active = active;
+    }
+
     public User(String userId, String login, String password, String name, String surname, String email, String phoneNumber,
                 String country, String postCode, String city, String street, String addressDetails, boolean active) {
         this.userId = userId;

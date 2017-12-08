@@ -8,18 +8,5 @@
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
-    <security:http auto-config="true">
-        <security:intercept-url pattern="/products/add/*" access = "hasAnyRole ('ROLE_ADMIN','IS_AUTHENTICATED_ANONYMOUSLY')" />
-        <security:form-login login-page="/login"
-                             default-target-url="/products/add"
-                             authentication-failure-url="/loginfailed"/>
-        <security:logout logout-success-url="/logout" />
-    </security:http>
-    <security:authentication-manager>
-        <security:authentication-provider>
-            <security:user-service>
-                <security:user name="Admin" password="Admin123" authorities="ROLE_ADMIN" />
-            </security:user-service>
-        </security:authentication-provider>
-    </security:authentication-manager>
+
 </beans>
