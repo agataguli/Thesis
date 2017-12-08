@@ -13,27 +13,14 @@ import java.sql.SQLException;
 @RestController
 @RequestMapping("/users")
 public class UserRestController {
-//consumes = "application/json"
-   @Autowired
+
+    @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/loginTest/", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public User authenticateUserTestJson(@RequestBody User user) throws SQLException {
-        User user2 = new User();
-        //user2 = user;
-          return userService.authenticateUser(user.getLogin(), user.getPassword());
+    @RequestMapping(value = "/loginM", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public User authenticateUser(@RequestBody User requestBody) throws SQLException {
+        return userService.authenticateUser(requestBody.getLogin(), requestBody.getPassword());
     }
-
-
-
-    @RequestMapping(value = "/loginTest", method = RequestMethod.POST,produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public User authenticateUserTestJson123(@RequestBody User requestBody) throws SQLException {
-        User user2 = new User();
-        //user2 = user;
-        return new User();//userService.authenticateUser(user.getLogin(), user.getPassword());
-    }
-
-
 
 
 }

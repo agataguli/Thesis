@@ -113,7 +113,7 @@ public class InMemoryUserRepository implements UserRepository {
         ResultSet rs = MysqlConnector.prepareStatement(statement);
         User user = this.createUserByResponse(rs);
         MysqlConnector.disconnect();
-        if(user == null) user = User.newError();
+        if(user == null) user = User.newErrorUser();
         return user;
     }
 }

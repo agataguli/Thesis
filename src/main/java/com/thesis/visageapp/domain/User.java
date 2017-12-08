@@ -190,7 +190,7 @@ public class User {
         return values;
     }
 
-    public static User newError() {
+    public static User newErrorUser() {
         User user = new User();
         user.setUserId("ERROR");
         return user;
