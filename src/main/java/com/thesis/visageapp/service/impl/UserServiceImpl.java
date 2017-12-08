@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(User user) throws SQLException {
-        userRepository.addUser(user);
+    public String addUser(User user) throws SQLException {
+        return userRepository.addUser(user);
     }
 
     @Override

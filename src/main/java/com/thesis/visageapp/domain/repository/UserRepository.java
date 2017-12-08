@@ -15,7 +15,7 @@ public interface UserRepository {
 
     Set<User> getUsersWithFilter(Map<String, List<String>> filterParams);
 
-    void addUser(User user) throws SQLException;
+    String addUser(User user) throws SQLException;
 
     List<User> getUsersWithAvailableStatus(boolean isAvailable);
 

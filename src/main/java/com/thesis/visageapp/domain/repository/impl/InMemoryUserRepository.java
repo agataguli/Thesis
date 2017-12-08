@@ -1,7 +1,4 @@
 package com.thesis.visageapp.domain.repository.impl;
-
-import com.mysql.jdbc.MySQLConnection;
-import com.thesis.visageapp.domain.Product;
 import com.thesis.visageapp.domain.User;
 import com.thesis.visageapp.domain.repository.UserRepository;
 import org.springframework.stereotype.Repository;
@@ -90,11 +87,30 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public void addUser(User user) throws SQLException {
-        this.listOfUsers.add(user);
-        String addQuery = StaticQueryParts.insertQuery(StaticQueryParts.USERS_TAB_NAME, user.getAttributesValues());
-        MysqlConnector.executeOnDatabase(addQuery);
-
+    public String addUser(User user) throws SQLException {
+        MysqlConnector.connect();
+        String resultCode = StaticQueryParts.RESPONSE_CODE_SUCCESS;
+        ResultSet rs = MysqlConnector.prepareStatement(StaticQueryParts.selectSingleQuery(
+                StaticQueryParts.USERS_TAB_NAME, StaticQueryParts.USERS_LOGIN, user.getLogin()));
+        if (rs.next()) {
+            resultCode = StaticQueryParts.RESPONSE_CODE_ERROR_SIGNUP_LOGIN_DUPLICATE;
+        } else {
+            rs = MysqlConnector.prepareStatement(StaticQueryParts.selectSingleQuery(
+                    StaticQueryParts.USERS_TAB_NAME, StaticQueryParts.USERS_USER_ID, user.getUserId()));
+            if (rs.next()) {
+                resultCode = StaticQueryParts.RESPONSE_CODE_ERROR_SIGNUP_PESEL_DUPLICATE;
+            } else {
+                rs = MysqlConnector.prepareStatement(StaticQueryParts.selectSingleQuery(
+                        StaticQueryParts.USERS_TAB_NAME, StaticQueryParts.USERS_EMAIL, user.getEmail()));
+                if (rs.next()) {
+                    resultCode = StaticQueryParts.RESPONSE_CODE_ERROR_SIGNUP_EMAIL_DUPLICATE;
+                } else {
+                    String addQuery = StaticQueryParts.insertQuery(StaticQueryParts.USERS_TAB_NAME, user.getAttributesValues());
+                    MysqlConnector.executeOnDatabase(addQuery);
+                }
+            }
+        }
+        return resultCode;
     }
 
     @Override
@@ -113,7 +129,7 @@ public class InMemoryUserRepository implements UserRepository {
         ResultSet rs = MysqlConnector.prepareStatement(statement);
         User user = this.createUserByResponse(rs);
         MysqlConnector.disconnect();
-        if(user == null) user = User.newErrorUser();
+        if (user == null) user = User.newErrorUser();
         return user;
     }
 }

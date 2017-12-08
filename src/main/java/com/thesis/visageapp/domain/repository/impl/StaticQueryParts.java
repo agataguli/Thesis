@@ -55,6 +55,13 @@ public class StaticQueryParts {
     public final static String USERS_ADDRESS_DETAILS = "addressDetails";
     public final static String USERS_ACTIVE = "active";
 
+    public static String RESPONSE_CODE_SUCCESS = "200";
+    public static String RESPONSE_CODE_FAIL = "201";
+
+    public static String RESPONSE_CODE_ERROR_SIGNUP_LOGIN_DUPLICATE = "300";
+    public static String RESPONSE_CODE_ERROR_SIGNUP_PESEL_DUPLICATE = "301";
+    public static String RESPONSE_CODE_ERROR_SIGNUP_EMAIL_DUPLICATE = "301";
+
     // combinations
     public static String updateQuery(String tableName, String columnName, String newValue, String condition) {
         return UPDATE + tableName + SET + columnName + " = " + newValue + WHERE + condition;
@@ -62,6 +69,10 @@ public class StaticQueryParts {
 
     public static String selectQuery(String tableName, String columnName1, String columnName2, String condition1, String condition2) {
         return SELECT_ALL_QUERY + tableName + WHERE + columnName1 + "='" + condition1 + "'" + AND + columnName2 + "='" + condition2 + "'";
+    }
+
+    public static String selectSingleQuery(String tableName, String columnName1, String condition1) {
+        return SELECT_ALL_QUERY + tableName + WHERE + columnName1 + "='" + condition1 + "'";
     }
 
     public static String insertQuery(String tableName, List values) {

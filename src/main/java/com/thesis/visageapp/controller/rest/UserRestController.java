@@ -22,10 +22,9 @@ public class UserRestController {
         return userService.authenticateUser(requestBody.getLogin(), requestBody.getPassword());
     }
 
-    @RequestMapping(value = "/signupM", method = RequestMethod.POST)
+    @RequestMapping(value = "/signupM", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
     public String signupUser(@RequestBody User newUserRequestBody) throws SQLException {
-        userService.addUser(newUserRequestBody);
-        return "123123";
+        return userService.addUser(newUserRequestBody);
     }
 
 
