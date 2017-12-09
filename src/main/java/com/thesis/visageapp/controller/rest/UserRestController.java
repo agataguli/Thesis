@@ -38,7 +38,7 @@ public class UserRestController {
     }
 
     @RequestMapping(value = "/deleteM", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public String deleteUserAccount(@RequestBody User userToRemove) throws SQLException {
-        return userService.deleteUserAccount(userToRemove);
+    public String deleteUserAccount(@RequestBody User userToDelete) throws SQLException {
+        return userService.deleteUserAccount(userToDelete);
     }
 }
