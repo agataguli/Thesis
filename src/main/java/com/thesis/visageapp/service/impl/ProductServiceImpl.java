@@ -1,6 +1,7 @@
 package com.thesis.visageapp.service.impl;
 
 import com.thesis.visageapp.domain.Product;
+import com.thesis.visageapp.domain.ProductFilter;
 import com.thesis.visageapp.domain.repository.ProductRepository;
 import com.thesis.visageapp.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,5 +72,10 @@ public class ProductServiceImpl implements ProductService {
         } catch (IllegalAccessException e) {
             throw new IllegalArgumentException("Cannot change quantity");
         }
+    }
+
+    @Override
+    public List getFilteredProducts(ProductFilter requestBody) {
+        return this.productRepository.getFilteredProducts(requestBody);
     }
 }

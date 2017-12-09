@@ -1,6 +1,7 @@
 package com.thesis.visageapp.domain.repository;
 
 import com.thesis.visageapp.domain.Product;
+import com.thesis.visageapp.domain.ProductFilter;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -26,4 +27,6 @@ public interface ProductRepository {
     void changeAvailability(boolean available, String productId) throws SQLException;
 
     void changeQuantity(int quantity, String productId) throws SQLException;
+
+    List getFilteredProducts(ProductFilter requestBody);
 }

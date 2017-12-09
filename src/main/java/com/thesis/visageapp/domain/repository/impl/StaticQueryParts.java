@@ -43,6 +43,9 @@ public class StaticQueryParts {
     public final static String PROD_QUANTITY = "quantity";
     public final static String PROD_IMAGE_LINK = "imageLink";
     public final static String PROD_AVAILABLE = "available";
+    public static final String PROD_CATEGORY_BRUSHES = "PĘDZLE";
+    public static final String PROD_CATEGORY_FURNITURE = "WYPOSAŻENIE";
+    public static final String PROD_CATEGORY_ACCESSORIES = "AKCESORIA";
 
     //table users
     public final static String USERS_TAB_NAME = "users";

@@ -1,6 +1,8 @@
 package com.thesis.visageapp.domain.repository.impl;
 
 import com.thesis.visageapp.domain.Product;
+import com.thesis.visageapp.domain.ProductFilter;
+import com.thesis.visageapp.domain.User;
 import com.thesis.visageapp.domain.repository.ProductRepository;
 import org.springframework.stereotype.Repository;
 
@@ -23,19 +25,24 @@ public class InMemoryProductRepository implements ProductRepository {
 
         try {
             while (rs.next()) {
-                product = new Product(
-                        rs.getString(StaticQueryParts.PROD_PRODUCT_ID), rs.getString(StaticQueryParts.PROD_NAME),
-                        rs.getString(StaticQueryParts.PROD_CATEGORY), rs.getString(StaticQueryParts.PROD_BRAND),
-                        rs.getDouble(StaticQueryParts.PROD_GROSS_VALUE), rs.getDouble(StaticQueryParts.PROD_NET_VALUE),
-                        rs.getString(StaticQueryParts.PROD_DESCRIPTION), rs.getInt(StaticQueryParts.PROD_QUANTITY),
-                        rs.getString(StaticQueryParts.PROD_IMAGE_LINK), rs.getBoolean(StaticQueryParts.PROD_AVAILABLE)
-                );
+                product = createProductByResponse(rs);
                 this.listOfProducts.add(product);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         MysqlConnector.disconnect();
+    }
+
+    private Product createProductByResponse(ResultSet rs) throws SQLException {
+        Product product = new Product(
+                rs.getString(StaticQueryParts.PROD_PRODUCT_ID), rs.getString(StaticQueryParts.PROD_NAME),
+                rs.getString(StaticQueryParts.PROD_CATEGORY), rs.getString(StaticQueryParts.PROD_BRAND),
+                rs.getDouble(StaticQueryParts.PROD_GROSS_VALUE), rs.getDouble(StaticQueryParts.PROD_NET_VALUE),
+                rs.getString(StaticQueryParts.PROD_DESCRIPTION), rs.getInt(StaticQueryParts.PROD_QUANTITY),
+                rs.getString(StaticQueryParts.PROD_IMAGE_LINK), rs.getBoolean(StaticQueryParts.PROD_AVAILABLE)
+        );
+        return product;
     }
 
     @Override
@@ -130,6 +137,32 @@ public class InMemoryProductRepository implements ProductRepository {
         String updateQuery = StaticQueryParts.updateQuery(StaticQueryParts.PROD_TAB_NAME, StaticQueryParts.PROD_QUANTITY,
                 String.valueOf(quantity), StaticQueryParts.buildCondition(StaticQueryParts.PROD_PRODUCT_ID, productId));
         MysqlConnector.executeOnDatabase(updateQuery);
+    }
 
+    @Override
+    public List getFilteredProducts(ProductFilter requestBody) {
+        List<Product> listOfFilteredProducts = new ArrayList<>();
+        for(Product product: this.listOfProducts) {
+            if(requestBody.getProductName().equalsIgnoreCase(product.getName()) || requestBody.getProductName().isEmpty()){
+                if(requestBody.getProductBrand().equalsIgnoreCase(product.getBrand()) || requestBody.getProductBrand().isEmpty()){
+                    if(requestBody.getProductPriceMax() <= product.getGrossValue() || requestBody.getProductPriceMax().isNaN()) {
+                        if(requestBody.getProductPriceMin() >= product.getGrossValue() || requestBody.getProductPriceMin().isNaN()) {
+                            if(requestBody.isProductCategoryAccessories() && product.getCategory().equalsIgnoreCase(StaticQueryParts.PROD_CATEGORY_ACCESSORIES)) {
+                                listOfFilteredProducts.add(product);
+                            } else {
+                                if(requestBody.isProductCategoryBrushes() && product.getCategory().equalsIgnoreCase(StaticQueryParts.PROD_CATEGORY_BRUSHES)) {
+                                    listOfFilteredProducts.add(product);
+                                } else {
+                                    if(requestBody.isProductCategoryFurniture() && product.getCategory().equalsIgnoreCase(StaticQueryParts.PROD_CATEGORY_FURNITURE)) {
+                                        listOfFilteredProducts.add(product);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return listOfFilteredProducts;
     }
 }

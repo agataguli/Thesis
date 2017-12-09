@@ -1,6 +1,7 @@
 package com.thesis.visageapp.service;
 
 import com.thesis.visageapp.domain.Product;
+import com.thesis.visageapp.domain.ProductFilter;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -25,4 +26,6 @@ public interface ProductService {
     void changeAvailability(String productId) throws SQLException;
 
     void updateQuantityByDelivered(String productId, Integer quantity);
+
+    List getFilteredProducts(ProductFilter requestBody);
 }
