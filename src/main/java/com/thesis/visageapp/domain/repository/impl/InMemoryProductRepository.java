@@ -28,7 +28,7 @@ public class InMemoryProductRepository implements ProductRepository {
                         rs.getString(StaticQueryParts.PROD_CATEGORY), rs.getString(StaticQueryParts.PROD_BRAND),
                         rs.getDouble(StaticQueryParts.PROD_GROSS_VALUE), rs.getDouble(StaticQueryParts.PROD_NET_VALUE),
                         rs.getString(StaticQueryParts.PROD_DESCRIPTION), rs.getInt(StaticQueryParts.PROD_QUANTITY),
-                        rs.getBoolean(StaticQueryParts.PROD_AVAILABLE)
+                        rs.getString(StaticQueryParts.PROD_IMAGE_LINK), rs.getBoolean(StaticQueryParts.PROD_AVAILABLE)
                 );
                 this.listOfProducts.add(product);
             }

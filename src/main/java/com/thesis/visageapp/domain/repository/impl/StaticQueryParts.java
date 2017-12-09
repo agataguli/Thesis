@@ -37,6 +37,7 @@ public class StaticQueryParts {
     public final static String PROD_NET_VALUE = "netValue";
     public final static String PROD_DESCRIPTION = "description";
     public final static String PROD_QUANTITY = "quantity";
+    public final static String PROD_IMAGE_LINK = "imageLink";
     public final static String PROD_AVAILABLE = "available";
 
     //table users

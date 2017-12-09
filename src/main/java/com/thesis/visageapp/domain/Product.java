@@ -14,17 +14,17 @@ public class Product {
     private Double netValue;
     private String description;
     private int quantity;
+    private String imageLink;
     private boolean available = true;
 
     public Product() {
-        // productId is barcode
-        // I generate example pesel for men born in january 1900
         super();
     }
 
     public Product(String productId, String name, String category, String brand, Double grossValue,
-                   Double netValue, String description, int quantity, boolean available) {
+                   Double netValue, String description, int quantity, String imageLink, boolean available) {
         this(productId, name, category, brand, grossValue, netValue, description, quantity);
+        this.imageLink = imageLink;
         this.available = available;
     }
 
@@ -38,6 +38,7 @@ public class Product {
         this.netValue = netValue;
         this.description = description;
         this.quantity = quantity;
+        this.imageLink = null;
         this.available = true;
     }
 
@@ -158,6 +159,14 @@ public class Product {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 
     public void setAvailable(boolean available) {
