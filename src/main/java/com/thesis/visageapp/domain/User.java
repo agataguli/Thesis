@@ -1,5 +1,7 @@
 package com.thesis.visageapp.domain;
 
+import com.thesis.visageapp.domain.repository.impl.StaticQueryParts;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -192,7 +194,7 @@ public class User {
 
     public static User newErrorUser() {
         User user = new User();
-        user.setUserId("ERROR");
+        user.setUserId(StaticQueryParts.ERROR);
         return user;
     }
 }
