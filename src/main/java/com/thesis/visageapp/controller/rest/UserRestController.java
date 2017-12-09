@@ -27,5 +27,8 @@ public class UserRestController {
         return userService.addUser(newUserRequestBody);
     }
 
-
+    @RequestMapping(value = "/updateM", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public String updateUserData(@RequestBody User userDataToUpdate) throws SQLException {
+        return null;//userService.updateUserData(userDataToUpdate);
+    }
 }

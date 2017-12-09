@@ -31,9 +31,7 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     private User createUserByResponse(ResultSet rs) throws SQLException {
-        User user = null;
-        if (rs.next()) {
-            user = new User(
+        User user = new User(
                     rs.getString(StaticQueryParts.USERS_USER_ID), rs.getString(StaticQueryParts.USERS_LOGIN),
                     rs.getString(StaticQueryParts.USERS_PASSWORD), rs.getString(StaticQueryParts.USERS_NAME),
                     rs.getString(StaticQueryParts.USERS_SURNAME), rs.getString(StaticQueryParts.USERS_EMAIL),
@@ -42,7 +40,6 @@ public class InMemoryUserRepository implements UserRepository {
                     rs.getString(StaticQueryParts.USERS_STREET), rs.getString(StaticQueryParts.USERS_ADDRESS_DETAILS),
                     rs.getBoolean(StaticQueryParts.USERS_ACTIVE)
             );
-        }
         return user;
     }
 
@@ -127,7 +124,9 @@ public class InMemoryUserRepository implements UserRepository {
         MysqlConnector.connect();
         String statement = StaticQueryParts.selectQuery(StaticQueryParts.USERS_TAB_NAME, StaticQueryParts.USERS_LOGIN, StaticQueryParts.USERS_PASSWORD, login, password);
         ResultSet rs = MysqlConnector.prepareStatement(statement);
+        rs.next();
         User user = this.createUserByResponse(rs);
+        this.listOfUsers.add(user);
         MysqlConnector.disconnect();
         if (user == null) user = User.newErrorUser();
         return user;
