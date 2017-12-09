@@ -20,4 +20,6 @@ public interface UserRepository {
     List<User> getUsersWithAvailableStatus(boolean isAvailable);
 
     User authenticateUser(String login, String password) throws SQLException;
+
+    String updateUserData(User userDataToUpdate) throws SQLException;
 }

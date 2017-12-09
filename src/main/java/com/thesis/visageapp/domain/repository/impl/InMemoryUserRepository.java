@@ -1,4 +1,5 @@
 package com.thesis.visageapp.domain.repository.impl;
+
 import com.thesis.visageapp.domain.User;
 import com.thesis.visageapp.domain.repository.UserRepository;
 import org.springframework.stereotype.Repository;
@@ -32,14 +33,14 @@ public class InMemoryUserRepository implements UserRepository {
 
     private User createUserByResponse(ResultSet rs) throws SQLException {
         User user = new User(
-                    rs.getString(StaticQueryParts.USERS_USER_ID), rs.getString(StaticQueryParts.USERS_LOGIN),
-                    rs.getString(StaticQueryParts.USERS_PASSWORD), rs.getString(StaticQueryParts.USERS_NAME),
-                    rs.getString(StaticQueryParts.USERS_SURNAME), rs.getString(StaticQueryParts.USERS_EMAIL),
-                    rs.getString(StaticQueryParts.USERS_PHONE_NUMBER), rs.getString(StaticQueryParts.USERS_COUNTRY),
-                    rs.getString(StaticQueryParts.USERS_POST_CODE), rs.getString(StaticQueryParts.USERS_CITY),
-                    rs.getString(StaticQueryParts.USERS_STREET), rs.getString(StaticQueryParts.USERS_ADDRESS_DETAILS),
-                    rs.getBoolean(StaticQueryParts.USERS_ACTIVE)
-            );
+                rs.getString(StaticQueryParts.USERS_USER_ID), rs.getString(StaticQueryParts.USERS_LOGIN),
+                rs.getString(StaticQueryParts.USERS_PASSWORD), rs.getString(StaticQueryParts.USERS_NAME),
+                rs.getString(StaticQueryParts.USERS_SURNAME), rs.getString(StaticQueryParts.USERS_EMAIL),
+                rs.getString(StaticQueryParts.USERS_PHONE_NUMBER), rs.getString(StaticQueryParts.USERS_COUNTRY),
+                rs.getString(StaticQueryParts.USERS_POST_CODE), rs.getString(StaticQueryParts.USERS_CITY),
+                rs.getString(StaticQueryParts.USERS_STREET), rs.getString(StaticQueryParts.USERS_ADDRESS_DETAILS),
+                rs.getBoolean(StaticQueryParts.USERS_ACTIVE)
+        );
         return user;
     }
 
@@ -131,4 +132,51 @@ public class InMemoryUserRepository implements UserRepository {
         if (user == null) user = User.newErrorUser();
         return user;
     }
+
+    @Override
+    public String updateUserData(User userDataToUpdate) throws SQLException {
+        MysqlConnector.connect();
+        String resultCode = StaticQueryParts.RESPONSE_CODE_SUCCESS;
+        ResultSet rs = MysqlConnector.prepareStatement(StaticQueryParts.selectDoubleQuery(
+                StaticQueryParts.USERS_TAB_NAME, StaticQueryParts.USERS_EMAIL, userDataToUpdate.getEmail(),
+                StaticQueryParts.USERS_USER_ID, userDataToUpdate.getUserId(), false));
+        if (rs.next()) {
+            resultCode = StaticQueryParts.RESPONSE_CODE_ERROR_UPDATE_EMAIL_DUPLICATE;
+            MysqlConnector.disconnect();
+        } else {
+            User user = this.authenticateUser(userDataToUpdate.getLogin(), userDataToUpdate.getPassword());
+            if (user.getUserId().equals(StaticQueryParts.ERROR)) {
+                resultCode = StaticQueryParts.RESPONSE_CODE_ERROR_UPDATE_INCORRECT_PASSWORD;
+            } else {
+                String updateQuery = StaticQueryParts.updateUserData(user);
+                MysqlConnector.executeOnDatabase(updateQuery);
+            }
+        }
+        MysqlConnector.disconnect();
+
+        return resultCode;
+    }
+
+
+    /*
+    public String updateUserData(User userDataToUpdate) throws SQLException {
+        MysqlConnector.connect();
+        String resultCode = StaticQueryParts.RESPONSE_CODE_SUCCESS;
+        ResultSet rs = MysqlConnector.prepareStatement(StaticQueryParts.selectSingleQuery(
+                StaticQueryParts.USERS_TAB_NAME, StaticQueryParts.USERS_EMAIL, userDataToUpdate.getEmail()));
+        if (rs.next()) {
+            resultCode = StaticQueryParts.RESPONSE_CODE_ERROR_UPDATE_EMAIL_DUPLICATE;
+        } else {
+            User userPassword = this.checkUserCredentials(userDataToUpdate.getLogin(), userDataToUpdate.getPassword());
+            if (userPassword.equals(User.newErrorUser())) {
+                resultCode = StaticQueryParts.RESPONSE_CODE_ERROR_UPDATE_INCORRECT_PASSWORD;
+            }
+            else {
+                String updateQuery = StaticQueryParts.updateAllQuery(StaticQueryParts.USERS_TAB_NAME, userDataToUpdate.getAttributesValues());
+                MysqlConnector.executeOnDatabase(updateQuery);
+            }
+        }
+        return resultCode;
+    }
+     */
 }

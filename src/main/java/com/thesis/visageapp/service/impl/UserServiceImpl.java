@@ -46,4 +46,9 @@ public class UserServiceImpl implements UserService {
     public User authenticateUser(String login, String password) throws SQLException {
         return userRepository.authenticateUser(login, password);
     }
+
+    @Override
+    public String updateUserData(User userDataToUpdate) throws SQLException {
+        return userRepository.updateUserData(userDataToUpdate);
+    }
 }

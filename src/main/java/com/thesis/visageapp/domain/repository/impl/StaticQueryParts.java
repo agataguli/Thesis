@@ -1,5 +1,7 @@
 package com.thesis.visageapp.domain.repository.impl;
 
+import com.thesis.visageapp.domain.User;
+
 import java.util.List;
 
 public class StaticQueryParts {
@@ -55,6 +57,7 @@ public class StaticQueryParts {
     public final static String USERS_STREET = "street";
     public final static String USERS_ADDRESS_DETAILS = "addressDetails";
     public final static String USERS_ACTIVE = "active";
+    public static final String ERROR = "ERROR";
 
     public static String RESPONSE_CODE_SUCCESS = "200";
     public static String RESPONSE_CODE_FAIL = "201";
@@ -62,6 +65,9 @@ public class StaticQueryParts {
     public static String RESPONSE_CODE_ERROR_SIGNUP_LOGIN_DUPLICATE = "300";
     public static String RESPONSE_CODE_ERROR_SIGNUP_PESEL_DUPLICATE = "301";
     public static String RESPONSE_CODE_ERROR_SIGNUP_EMAIL_DUPLICATE = "301";
+
+    public static final String RESPONSE_CODE_ERROR_UPDATE_INCORRECT_PASSWORD = "400";
+    public static final String RESPONSE_CODE_ERROR_UPDATE_EMAIL_DUPLICATE = "401";
 
     // combinations
     public static String updateQuery(String tableName, String columnName, String newValue, String condition) {
@@ -74,6 +80,14 @@ public class StaticQueryParts {
 
     public static String selectSingleQuery(String tableName, String columnName1, String condition1) {
         return SELECT_ALL_QUERY + tableName + WHERE + columnName1 + "='" + condition1 + "'";
+    }
+
+    public static String selectDoubleQuery(String tableName, String cN1, String cD1, String cN2, String cD2, boolean b) {
+        String sign;
+        if(b) sign = "='";
+        else sign="!='";
+        String query = selectSingleQuery(tableName,cN1,cD1) + AND + cN2 + sign + cD2 + "'";
+        return query;
     }
 
     public static String insertQuery(String tableName, List values) {
@@ -96,5 +110,19 @@ public class StaticQueryParts {
 
     public static String buildCondition(String columnName, String value) {
         return "`" + columnName + "` = " + "'" + value + "'";
+    }
+
+    public static String updateUserData(User user) {
+        String sqlQuery = UPDATE + USERS_TAB_NAME + SET + "`" +
+                USERS_NAME + "`='" + user.getName() + "', `" +
+                USERS_SURNAME + "`='" + user.getSurname() + "', `" +
+                USERS_EMAIL + "`='" + user.getEmail() + "', `" +
+                USERS_PHONE_NUMBER + "`='" + user.getPhoneNumber() + "', `" +
+                USERS_COUNTRY + "`='" + user.getCountry() + "', `" +
+                USERS_POST_CODE + "`='" + user.getPostCode() + "', `" +
+                USERS_STREET + "`='" + user.getStreet() + "', `" +
+                USERS_ADDRESS_DETAILS + "`='" + user.getAddressDetails() + "' " +
+                WHERE + "`" + USERS_USER_ID + "`='" + user.getUserId() + "'";
+        return sqlQuery;
     }
 }
