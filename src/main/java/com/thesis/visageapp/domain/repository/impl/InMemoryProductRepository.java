@@ -145,8 +145,8 @@ public class InMemoryProductRepository implements ProductRepository {
         for(Product product: this.listOfProducts) {
             if(requestBody.getProductName().equalsIgnoreCase(product.getName()) || requestBody.getProductName().isEmpty()){
                 if(requestBody.getProductBrand().equalsIgnoreCase(product.getBrand()) || requestBody.getProductBrand().isEmpty()){
-                    if(requestBody.getProductPriceMax() <= product.getGrossValue() || requestBody.getProductPriceMax().isNaN()) {
-                        if(requestBody.getProductPriceMin() >= product.getGrossValue() || requestBody.getProductPriceMin().isNaN()) {
+                    if(requestBody.getProductPriceMax() >= product.getGrossValue() || requestBody.getProductPriceMax()==100000) {
+                        if(requestBody.getProductPriceMin() <= product.getGrossValue() || requestBody.getProductPriceMin()==0) {
                             if(requestBody.isProductCategoryAccessories() && product.getCategory().equalsIgnoreCase(StaticQueryParts.PROD_CATEGORY_ACCESSORIES)) {
                                 listOfFilteredProducts.add(product);
                             } else {
