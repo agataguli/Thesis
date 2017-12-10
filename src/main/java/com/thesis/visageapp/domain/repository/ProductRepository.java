@@ -28,7 +28,11 @@ public interface ProductRepository {
 
     void changeQuantity(int quantity, String productId) throws SQLException;
 
-    List getFilteredProducts(ProductFilter requestBody);
+    List getFilteredProducts(ProductFilter requestBody) throws SQLException;
 
-    List getUserFavProducts(String userId);
+    List getUserFavProducts(String userId) throws SQLException;
+
+    String addProductToUserFavProductList(String userId, String productId) throws SQLException;
+
+    String removeProductToUserFavProductList(String userId, String productId) throws SQLException;
 }

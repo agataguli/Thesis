@@ -195,4 +195,22 @@ public class InMemoryProductRepository implements ProductRepository {
         }
         return listOfFilteredProducts;
     }
+
+    @Override
+    public String addProductToUserFavProductList(String userId, String productId) throws SQLException {
+        List<String> values = new ArrayList<>();
+        values.add(UUID.randomUUID().toString());
+        values.add(String.valueOf(userId));
+        values.add(String.valueOf(productId));
+        String addQuery = StaticQueryParts.insertQuery(StaticQueryParts.FAV_TAB_NAME, values);
+        MysqlConnector.executeOnDatabase(addQuery);
+        return StaticQueryParts.RESPONSE_CODE_SUCCESS;
+    }
+
+    @Override
+    public String removeProductToUserFavProductList(String userId, String productId) throws SQLException {
+        String removeQuery = StaticQueryParts.removeFromFavList(userId, productId);
+        MysqlConnector.executeOnDatabase(removeQuery);
+        return StaticQueryParts.RESPONSE_CODE_SUCCESS;
+    }
 }

@@ -145,6 +145,10 @@ public class StaticQueryParts {
         return sqlQuery;
     }
 
+    public static String removeFromFavList(String userId, String productId) {
+        return DELETE + FROM + FAV_TAB_NAME + " " + WHERE + FAV_USER_ID + "='" + userId +"'" +AND + FAV_PRODUCT_ID + "='" + productId +"'";
+    }
+
     public static String removeUser(String userId) {
         return DELETE + FROM + USERS_TAB_NAME + " " + WHERE + USERS_USER_ID + "='" + userId +"'";
     }

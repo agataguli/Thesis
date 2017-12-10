@@ -75,13 +75,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List getFilteredProducts(ProductFilter requestBody) {
+    public List getFilteredProducts(ProductFilter requestBody) throws SQLException {
         return this.productRepository.getFilteredProducts(requestBody);
     }
 
     @Override
     public List getUserFavProducts(String userId) throws SQLException {
         return this.productRepository.getUserFavProducts(userId);
+    }
+
+    @Override
+    public String addProductToUserFavProductList(String userId, String productId) throws SQLException {
+        return this.productRepository.addProductToUserFavProductList(userId, productId);
+    }
+
+    @Override
+    public String removeProductToUserFavProductList(String userId, String productId) throws SQLException {
+        return this.productRepository.removeProductToUserFavProductList(userId, productId);
     }
 
 }
