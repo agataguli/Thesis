@@ -78,4 +78,10 @@ public class ProductServiceImpl implements ProductService {
     public List getFilteredProducts(ProductFilter requestBody) {
         return this.productRepository.getFilteredProducts(requestBody);
     }
+
+    @Override
+    public List getUserFavProducts(String userId) throws SQLException {
+        return this.productRepository.getUserFavProducts(userId);
+    }
+
 }

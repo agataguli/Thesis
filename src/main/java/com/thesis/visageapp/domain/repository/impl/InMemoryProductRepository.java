@@ -165,4 +165,34 @@ public class InMemoryProductRepository implements ProductRepository {
         }
         return listOfFilteredProducts;
     }
+
+    @Override
+    public List getUserFavProducts(String userId) {
+        MysqlConnector.connect();
+        ResultSet rs = MysqlConnector.prepareStatement(StaticQueryParts.getIdsOfFavoriteUserProducts(userId));
+        List<String> listOfProductIds = new ArrayList<>();
+        Product p = null;
+
+        try {
+            while (rs.next()) {
+                listOfProductIds.add(rs.getString(StaticQueryParts.PROD_PRODUCT_ID));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        MysqlConnector.disconnect();
+
+        List<Product> listOfFilteredProducts = new ArrayList<>();
+        for(String s: listOfProductIds) {
+            try {
+                p = this.getProductWithId(s);
+                if(p != null) {
+                    listOfFilteredProducts.add(p);
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return listOfFilteredProducts;
+    }
 }

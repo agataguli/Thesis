@@ -28,4 +28,6 @@ public interface ProductService {
     void updateQuantityByDelivered(String productId, Integer quantity);
 
     List getFilteredProducts(ProductFilter requestBody);
+
+    List getUserFavProducts(String userId) throws SQLException;;
 }

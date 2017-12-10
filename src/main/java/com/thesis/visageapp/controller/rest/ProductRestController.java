@@ -28,4 +28,9 @@ public class ProductRestController {
     public List getFilteredProducts(@RequestBody ProductFilter requestBody) throws SQLException {
         return productService.getFilteredProducts(requestBody);
     }
+
+    @RequestMapping(value = "/favM/{userId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public List getUserFavProducts(@PathVariable(value = "userId") String userId) throws SQLException {
+        return productService.getUserFavProducts(userId);
+    }
 }

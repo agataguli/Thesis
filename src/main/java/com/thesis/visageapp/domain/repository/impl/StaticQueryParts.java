@@ -7,7 +7,7 @@ import java.util.List;
 public class StaticQueryParts {
     // default header query parts
     public final static String SELECT_ALL_QUERY = "select * from ";
-    public final static String SELECT = "select";
+    public final static String SELECT = "select ";
     public final static String SET = " set ";
     public final static String UPDATE = "update ";
     public final static String WHERE = " where ";
@@ -30,6 +30,11 @@ public class StaticQueryParts {
     public final static String ADMINS_EMAIL = "email";
     public final static String ADMINS_PHONE_NUMBER = "phoneNumber";
     public final static String ADMINS_ACTIVE = "active";
+
+    // table Favorites
+    public final static String FAV_TAB_NAME = "favorites";
+    public final static String FAV_PRODUCT_ID = "productId";
+    public final static String FAV_USER_ID = "userId";
 
     // table products
     public final static String PROD_TAB_NAME = "products";
@@ -142,5 +147,9 @@ public class StaticQueryParts {
 
     public static String removeUser(String userId) {
         return DELETE + FROM + USERS_TAB_NAME + " " + WHERE + USERS_USER_ID + "='" + userId +"'";
+    }
+
+    public static String getIdsOfFavoriteUserProducts(String userId) {
+        return SELECT + FAV_PRODUCT_ID + FROM + FAV_TAB_NAME + WHERE + FAV_USER_ID +"='" + userId +"'";
     }
 }

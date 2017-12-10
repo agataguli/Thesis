@@ -1,6 +1,5 @@
 package com.thesis.visageapp.service;
 
-
 import java.sql.SQLException;
 
 public interface OrderService {
