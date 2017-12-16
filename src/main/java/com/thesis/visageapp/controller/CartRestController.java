@@ -1,19 +1,20 @@
 package com.thesis.visageapp.controller;
 
 import com.thesis.visageapp.domain.Cart;
-import com.thesis.visageapp.domain.CartItem;
 import com.thesis.visageapp.domain.Product;
 import com.thesis.visageapp.service.CartService;
 import com.thesis.visageapp.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 
 @Controller
-@RequestMapping(value = "rest/cart")
+@RequestMapping(value = "/cart")
 public class CartRestController {
     private CartService cartService;
 
@@ -27,7 +28,7 @@ public class CartRestController {
 
     @RequestMapping(value = "/add/{productId}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void addItem(@PathVariable String productId, HttpServletRequest request) throws IllegalAccessException {
+    public void addItem(@PathVariable String productId, HttpServletRequest request) throws IllegalAccessException, SQLException {
         String sessionId = request.getSession(true).getId();
         Cart cart = cartService.read(sessionId);
         if(cart== null) {
@@ -37,13 +38,13 @@ public class CartRestController {
         if(product == null) {
             throw new IllegalArgumentException("Cannot add to cart product with non existing productId: "+productId);
         }
-        cart.addCartItem(new CartItem(product));
+        cart.addCartItem((product));
         cartService.update(sessionId, cart);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value ="/newM", method = RequestMethod.POST,produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
-    Cart create(@RequestBody Cart cart) {
+    Cart create(@RequestBody Cart cart) throws SQLException {
         return cartService.create(cart);
     }
 
@@ -61,7 +62,7 @@ public class CartRestController {
 
     @RequestMapping(value = "/remove/{productId}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void removeItem(@PathVariable String productId, HttpServletRequest request) throws IllegalAccessException {
+    public void removeItem(@PathVariable String productId, HttpServletRequest request) throws IllegalAccessException, SQLException {
         String sessionId = request.getSession(true).getId();
         Cart cart = cartService.read(sessionId);
         if(cart== null) {
@@ -71,7 +72,7 @@ public class CartRestController {
         if(product == null) {
             throw new IllegalArgumentException("Cannot remove from cart item with non existing productId: " +productId);
         }
-        cart.removeCartItem(new CartItem(product));
+        cart.removeCartItem(product);
         cartService.update(sessionId, cart);
     }
 

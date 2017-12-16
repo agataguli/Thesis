@@ -64,6 +64,10 @@ public class StaticQueryParts {
     public final static String USERS_ACTIVE = "active";
     public static final String ERROR = "ERROR";
 
+    //table cart
+
+    public final static String CART_TAB_NAME = "cart";
+
     public static final String RESPONSE_CODE_SUCCESS = "200";
     public static final String RESPONSE_CODE_FAIL = "201";
 

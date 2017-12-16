@@ -4,12 +4,22 @@ import com.thesis.visageapp.domain.Cart;
 import com.thesis.visageapp.domain.repository.CartRepository;
 import org.springframework.stereotype.Repository;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 @Repository
 public class InMemoryCartRepository implements CartRepository {
-
+    private String productId;
+    private String name;
+    private String category;
+    private String brand;
+    private Double grossValue;
+    private Double netValue;
+    private String description;
+    private int quantity;
+    private String imageLink;
+    private boolean available = true;
     private Map<String, Cart> listOfCarts;
 
     public InMemoryCartRepository() {
@@ -17,11 +27,16 @@ public class InMemoryCartRepository implements CartRepository {
     }
 
     @Override
-    public Cart create(Cart cart) {
+    public Cart create(Cart cart) throws SQLException {
         if (this.listOfCarts.keySet().contains(cart.getCartId())) {
             throw new IllegalArgumentException("Cannot create cart with existing id:" + cart.getCartId());
         }
         this.listOfCarts.put(cart.getCartId(), cart);
+        for (String s : cart.getCartItems()){
+            String addQuery = StaticQueryParts.insertQuery(StaticQueryParts.CART_TAB_NAME, cart.getAttributesValues(s));
+            MysqlConnector.executeOnDatabase(addQuery);
+        }
+
         return cart;
     }
 

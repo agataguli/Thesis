@@ -2,8 +2,10 @@ package com.thesis.visageapp.service;
 
 import com.thesis.visageapp.domain.Cart;
 
+import java.sql.SQLException;
+
 public interface CartService {
-    Cart create(Cart cart);
+    Cart create(Cart cart) throws SQLException;
 
     void delete(String cartId);
 

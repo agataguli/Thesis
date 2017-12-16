@@ -1,15 +1,28 @@
 package com.thesis.visageapp.domain;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Cart {
     private String cartId;
     private Double totalCartItemsGrossValue;
-    private Map<String, CartItem> cartItems;
+    private String userId;
+    private List <String> cartItems;
+
+
+    public void setCartItems(List<String> cartItems) {
+        this.cartItems = cartItems;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public Cart() {
-        cartItems = new HashMap<String, CartItem>();
+        cartItems = new ArrayList<String>();
         totalCartItemsGrossValue = Double.valueOf(0);
     }
 
@@ -17,26 +30,22 @@ public class Cart {
         this.cartId = cartId;
     }
 
-    public void addCartItem(CartItem cartItemToAdd) {
-        String itemProductId = cartItemToAdd.getProduct().getProductId();
-        if (cartItems.containsKey(itemProductId)) {
-            CartItem cartItemAlreadyInCart = cartItems.get(itemProductId);
-            cartItemAlreadyInCart.setQuantity(cartItemAlreadyInCart.getQuantity() + cartItemToAdd.getQuantity());
-            cartItems.put(itemProductId, cartItemAlreadyInCart);
-        } else cartItems.put(itemProductId, cartItemToAdd);
+    public void addCartItem(Product cartItemToAdd) {
+        String itemProductId = cartItemToAdd.getProductId();
+       // cartItems.add(cartItemToAdd);
         this.updateTotalCartItemsGrossValue();
     }
 
-    public void removeCartItem(CartItem cartItemToRemove) {
-        cartItems.remove(cartItemToRemove.getProduct().getProductId());
+    public void removeCartItem(Product cartItemToRemove) {
+        cartItems.remove(cartItemToRemove.getProductId());
         this.updateTotalCartItemsGrossValue();
     }
 
     private void updateTotalCartItemsGrossValue() {
         this.totalCartItemsGrossValue = Double.valueOf(0);
-        for(CartItem cartItem: cartItems.values()) {
-            this.totalCartItemsGrossValue +=cartItem.getTotalMultipliedItemGrossValue();
-        }
+       // for (Product cartItem : cartItems) {
+       //     this.totalCartItemsGrossValue += cartItem.getGrossValue();
+       // }
     }
 
     public String getCartId() {
@@ -55,13 +64,10 @@ public class Cart {
         this.totalCartItemsGrossValue = totalCartItemsGrossValue;
     }
 
-    public Map<String, CartItem> getCartItems() {
+    public List<String> getCartItems() {
         return cartItems;
     }
 
-    public void setCartItems(Map<String, CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -69,15 +75,16 @@ public class Cart {
         if (o == null || getClass() != o.getClass()) return false;
 
         Cart cart = (Cart) o;
-        if(this.cartId == null) {
-            if(cart.cartId != null) {
+        if (this.cartId == null) {
+            if (cart.cartId != null) {
                 return false;
             }
-        } else if(!this.cartId.equals(cart.cartId)) {
+        } else if (!this.cartId.equals(cart.cartId)) {
             return false;
         }
         return true;
     }
+
 
     @Override
     public int hashCode() {
@@ -85,4 +92,17 @@ public class Cart {
         int result = prime * 1 + ((this.cartId == null) ? 0 : cartId.hashCode());
         return result;
     }
+
+    public List getAttributesValues(String s) {
+        List values = new ArrayList();
+        values.add(cartId);
+        values.add(s);
+        values.add(getTotalCartItemsGrossValue());
+        values.add(userId);
+        return values;
+    }
 }
+
+
+
+

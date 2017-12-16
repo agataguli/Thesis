@@ -6,6 +6,8 @@ import com.thesis.visageapp.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
+
 @Service
 public class CartServiceImpl implements CartService {
     private CartRepository cartRepository;
@@ -16,7 +18,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart create(Cart cart) {
+    public Cart create(Cart cart) throws SQLException {
         return this.cartRepository.create(cart);
     }
 
