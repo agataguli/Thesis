@@ -20,7 +20,8 @@ public class InMemoryProductRepository implements ProductRepository {
 
     private void takeAllProductsFromDatabase() {
         MysqlConnector.connect();
-        ResultSet rs = MysqlConnector.prepareStatement(StaticQueryParts.SELECT_ALL_QUERY + StaticQueryParts.PROD_TAB_NAME);
+        ResultSet rs = MysqlConnector.prepareStatement(StaticQueryParts.SELECT_ALL_QUERY
+                + StaticQueryParts.PROD_TAB_NAME);
         Product product;
 
         try {
