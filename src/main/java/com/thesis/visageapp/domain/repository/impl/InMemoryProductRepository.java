@@ -214,4 +214,19 @@ public class InMemoryProductRepository implements ProductRepository {
         MysqlConnector.executeOnDatabase(removeQuery);
         return StaticQueryParts.RESPONSE_CODE_SUCCESS;
     }
+
+    @Override
+    public String checkAreProductsAvailable(Map<String, Integer> groupedByQuantityAndIds) {
+        final String[] value = {StaticQueryParts.RESPONSE_CODE_SUCCESS};
+        groupedByQuantityAndIds.forEach((k,v) -> {
+            try {
+                if(!this.getProductWithId(k).isAvailable(v)) {
+                    value[0] = StaticQueryParts.RESPONSE_CODE_ERROR_ORDER_NOT_ENOUGH_PRODUCTS + k;
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
+        return value[0];
+    }
 }

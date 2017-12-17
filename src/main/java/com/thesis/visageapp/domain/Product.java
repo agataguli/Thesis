@@ -117,6 +117,10 @@ public class Product {
         this.quantity--;
     }
 
+    public boolean isAvailable(int orderedItemsQuantity) {
+        return this.available && this.quantity >= orderedItemsQuantity;
+    }
+
     public void changeAvailability() {
         this.available = !this.available;
     }

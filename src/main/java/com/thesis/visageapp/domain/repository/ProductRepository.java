@@ -35,4 +35,6 @@ public interface ProductRepository {
     String addProductToUserFavProductList(String userId, String productId) throws SQLException;
 
     String removeProductToUserFavProductList(String userId, String productId) throws SQLException;
+
+    String checkAreProductsAvailable(Map<String, Integer> groupedByQuantityAndIds);
 }

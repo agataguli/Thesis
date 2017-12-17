@@ -2,6 +2,7 @@ package com.thesis.visageapp.domain.repository.impl;
 
 import com.thesis.visageapp.domain.User;
 
+import java.util.Date;
 import java.util.List;
 
 public class StaticQueryParts {
@@ -35,6 +36,21 @@ public class StaticQueryParts {
     public final static String FAV_TAB_NAME = "favorites";
     public final static String FAV_PRODUCT_ID = "productId";
     public final static String FAV_USER_ID = "userId";
+
+    //table orders
+    public final static String ORDER_TAB_NAME = "orders";
+    public final static String ORDER_ORDER_ID = "orderId";
+    public final static String ORDER_USER_ID = "userId";
+    public final static String ORDER_GROSS_VALUE = "orderGrossValue";
+    public final static String ORDER_DATE = "date";
+    public final static String ORDER_STATUS = "status";
+
+    //table orderitems
+    public final static String ORDERITEM_TAB_NAME = "orderitems";
+    public final static String ORDERITEM_ORDERITEM_ID = "orderItemId";
+    public final static String ORDERITEM_PRODUCT_ID = "productId";
+    public final static String ORDERITEM_GROSS_VALUE = "itemGrossValue";
+    public final static String ORDERITEM_ORDER_ID = "itemGrossValue";
 
     // table products
     public final static String PROD_TAB_NAME = "products";
@@ -80,6 +96,8 @@ public class StaticQueryParts {
     public static final String RESPONSE_CODE_ERROR_UPDATE_EMAIL_DUPLICATE = "401";
 
     public static final String RESPONSE_CODE_ERROR_INCORRECT_OLD_PASSWORD = "501";
+    public static final String RESPONSE_CODE_ERROR_ORDER_NOT_ENOUGH_PRODUCTS = "600-";
+    public static final String ORDER_STATUS_ACTIVE = "ACTIVE";
 
     // combinations
     public static String updateQuery(String tableName, String columnName, String newValue, String condition) {

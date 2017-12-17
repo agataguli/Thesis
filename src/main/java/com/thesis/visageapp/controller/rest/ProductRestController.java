@@ -24,6 +24,14 @@ public class ProductRestController {
         return productService.getAllProducts();
     }
 
+    @RequestMapping(value = "/favM/add/{userId}/{productId}",
+            method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public String addProductToUserFavProductList(
+            @PathVariable(value = "userId") String userId, @PathVariable(value = "productId") String productId)
+            throws SQLException {
+        return productService.addProductToUserFavProductList(userId, productId);
+    }
+
     @RequestMapping(value = "/filterM", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     public List getFilteredProducts(@RequestBody ProductFilter requestBody) throws SQLException {
         return productService.getFilteredProducts(requestBody);
@@ -32,11 +40,6 @@ public class ProductRestController {
     @RequestMapping(value = "/favM/{userId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     public List getUserFavProducts(@PathVariable(value = "userId") String userId) throws SQLException {
         return productService.getUserFavProducts(userId);
-    }
-
-    @RequestMapping(value = "/favM/add/{userId}/{productId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public String addProductToUserFavProductList(@PathVariable(value = "userId") String userId, @PathVariable(value = "productId") String productId) throws SQLException {
-        return productService.addProductToUserFavProductList(userId, productId);
     }
 
     @RequestMapping(value = "/favM/remove/{userId}/{productId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})

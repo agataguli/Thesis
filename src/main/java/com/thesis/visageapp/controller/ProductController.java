@@ -23,15 +23,15 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public String listProducts(Model model) {
-        model.addAttribute("products", productService.getAllProducts());
-        return "products";
-    }
-
     @RequestMapping(value = "/{category}", method = RequestMethod.GET)
     public String getProductsByCategory(Model model, @PathVariable("category") String productCategory) {
         model.addAttribute("products", productService.getProductsWithCategory(productCategory));
+        return "products";
+    }
+
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public String listProducts(Model model) {
+        model.addAttribute("products", productService.getAllProducts());
         return "products";
     }
 
