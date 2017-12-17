@@ -96,7 +96,7 @@ public class StaticQueryParts {
     public static final String RESPONSE_CODE_ERROR_UPDATE_EMAIL_DUPLICATE = "401";
 
     public static final String RESPONSE_CODE_ERROR_INCORRECT_OLD_PASSWORD = "501";
-    public static final String RESPONSE_CODE_ERROR_ORDER_NOT_ENOUGH_PRODUCTS = "600-";
+    public static final String RESPONSE_CODE_ERROR_ORDER_NOT_ENOUGH_PRODUCTS = "600_";
     public static final String ORDER_STATUS_ACTIVE = "ACTIVE";
 
     // combinations

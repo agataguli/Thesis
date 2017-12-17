@@ -55,22 +55,22 @@ public class OrderServiceImpl implements OrderService {
         }
         Double totalGrossValue = this.calculateTotalGrossValue(productsIds);
         String orderId = this.orderRepository.createOrder(userId, totalGrossValue);
-        groupedByQuantityAndIds.forEach((k,v) -> {
+        groupedByQuantityAndIds.forEach((k, v) -> {
             try {
                 this.productRepository.changeQuantity(v, k);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         });
-        for(String productId: productsIds) {
-            this.orderItemRepository.createOrderItem(productId,this.productRepository.getProductWithId(productId).getGrossValue(),orderId);
+        for (String productId : productsIds) {
+            this.orderItemRepository.createOrderItem(productId, this.productRepository.getProductWithId(productId).getGrossValue(), orderId);
         }
-        return response;
+        return response + "_" + orderId;
     }
 
     private Double calculateTotalGrossValue(List<String> productsIds) throws IllegalAccessException {
         Double total = 0.0;
-        for(String productId: productsIds) {
+        for (String productId : productsIds) {
             total += this.productRepository.getProductWithId(productId).getGrossValue();
         }
         total = new BigDecimal(total.toString()).setScale(2, RoundingMode.HALF_UP).doubleValue();

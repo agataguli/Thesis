@@ -221,7 +221,7 @@ public class InMemoryProductRepository implements ProductRepository {
         groupedByQuantityAndIds.forEach((k,v) -> {
             try {
                 if(!this.getProductWithId(k).isAvailable(v)) {
-                    value[0] = StaticQueryParts.RESPONSE_CODE_ERROR_ORDER_NOT_ENOUGH_PRODUCTS + k;
+                    value[0] = StaticQueryParts.RESPONSE_CODE_ERROR_ORDER_NOT_ENOUGH_PRODUCTS + k + this.getProductWithId(k).getQuantity();
                 }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
