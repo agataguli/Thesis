@@ -1,7 +1,9 @@
 package com.thesis.visageapp.controller.rest;
 
+import com.thesis.visageapp.domain.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import com.thesis.visageapp.service.OrderService;
@@ -27,5 +29,10 @@ public class OrderRestController {
     public String orderProductsFromCart(@RequestBody List<String> productsIds,
                                         @PathVariable(value = "userId") String userId) throws SQLException, IllegalAccessException {
         return orderService.order(productsIds, userId);
+    }
+
+    @RequestMapping(value = "/historyOrders/{userId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public List<Order> getUserFavProducts(@PathVariable(value = "userId") String userId) throws SQLException {
+        return orderService.getHistoryOrders(userId);
     }
 }

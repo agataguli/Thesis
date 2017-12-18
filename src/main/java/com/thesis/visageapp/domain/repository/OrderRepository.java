@@ -7,4 +7,6 @@ public interface OrderRepository {
     public List getAllOrders();
 
     public String createOrder(String userId, Double totalGrossValue) throws SQLException;
+
+    public List getHistoryOrders(String userId) throws SQLException;
 }

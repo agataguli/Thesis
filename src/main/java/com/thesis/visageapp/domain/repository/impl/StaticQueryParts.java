@@ -174,4 +174,10 @@ public class StaticQueryParts {
     public static String getIdsOfFavoriteUserProducts(String userId) {
         return SELECT + FAV_PRODUCT_ID + FROM + FAV_TAB_NAME + WHERE + FAV_USER_ID +"='" + userId +"'";
     }
+
+    public static String getUserHistoryOrders(String userId) {
+        return SELECT_ALL_QUERY + ORDER_TAB_NAME + WHERE + FAV_USER_ID +"='" + userId +"'";
+        //SELECT * FROM `orders` WHERE `userId`= ??
+    }
+
 }

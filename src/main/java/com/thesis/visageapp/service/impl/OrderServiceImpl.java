@@ -1,5 +1,6 @@
 package com.thesis.visageapp.service.impl;
 
+import com.thesis.visageapp.domain.Order;
 import com.thesis.visageapp.domain.repository.OrderItemRepository;
 import com.thesis.visageapp.domain.repository.OrderRepository;
 import com.thesis.visageapp.domain.repository.impl.StaticQueryParts;
@@ -66,6 +67,11 @@ public class OrderServiceImpl implements OrderService {
             this.orderItemRepository.createOrderItem(productId, this.productRepository.getProductWithId(productId).getGrossValue(), orderId);
         }
         return response + "_" + orderId;
+    }
+
+    @Override
+    public List<Order> getHistoryOrders(String userId) throws SQLException {
+        return this.orderRepository.getHistoryOrders(userId);
     }
 
     private Double calculateTotalGrossValue(List<String> productsIds) throws IllegalAccessException {
