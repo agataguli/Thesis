@@ -31,7 +31,7 @@ public class OrderRestController {
         return orderService.order(productsIds, userId);
     }
 
-    @RequestMapping(value = "/historyOrders/{userId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    @RequestMapping(value = "/history/{userId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     public List<Order> getUserFavProducts(@PathVariable(value = "userId") String userId) throws SQLException {
         return orderService.getHistoryOrders(userId);
     }
