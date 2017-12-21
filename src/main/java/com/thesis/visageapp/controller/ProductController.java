@@ -51,6 +51,10 @@ public class ProductController {
     @RequestMapping(value = "/changeAvailability")
     public String changeAvailability(@RequestParam("id") String productId, Model model) throws IllegalAccessException, SQLException {
         productService.changeAvailability(productId);
+        String productName = productService.getProductWithId(productId).getName();
+        if(productService.getProductWithId(productId).isAvailable()){
+            return "redirect:/send?id=" + productId;
+        }
         return "redirect:/products/all";
     }
 
