@@ -229,4 +229,17 @@ public class InMemoryProductRepository implements ProductRepository {
         });
         return value[0];
     }
+
+    @Override
+    public List<Product> getProductsWithIds(List<String> productsIds) throws IllegalAccessException {
+        List <Product> products = new ArrayList<>();
+        Product fromRepo;
+        for(String pr : productsIds) {
+            fromRepo = this.getProductWithId(pr);
+            if(fromRepo != null) {
+                products.add(fromRepo);
+            }
+        }
+        return products;
+    }
 }

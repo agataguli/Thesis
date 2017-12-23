@@ -24,7 +24,7 @@ public class OrderItemController {
         return "orderItems";
     }
 
-    @RequestMapping(value = "/getProductsForOrder/{orderId}")
+    @RequestMapping(value = "/getItemsForOrder/{orderId}")
     public String getProductsForOrder(@PathVariable(value = "orderId") String orderId, Model model) throws SQLException {
         model.addAttribute("orderItems", orderItemService.getProductsForOrder(orderId));
         return "orderItems";

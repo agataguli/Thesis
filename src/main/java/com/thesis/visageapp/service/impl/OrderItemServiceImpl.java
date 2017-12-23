@@ -31,6 +31,6 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public List<OrderItem> getProductsForOrder(String orderId) {
-        return this.orderItemRepository.getProductsForOrder(orderId);
+        return this.orderItemRepository.getItemsForOrder(orderId);
     }
 }

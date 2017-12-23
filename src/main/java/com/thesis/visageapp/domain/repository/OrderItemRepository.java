@@ -1,6 +1,7 @@
 package com.thesis.visageapp.domain.repository;
 
 import com.thesis.visageapp.domain.OrderItem;
+import com.thesis.visageapp.domain.Product;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -11,5 +12,7 @@ public interface OrderItemRepository {
 
     List<OrderItem> getAllItemsForAllOrders();
 
-    List<OrderItem> getProductsForOrder(String orderId);
+    List<OrderItem> getItemsForOrder(String orderId);
+
+    List<String> getOrderedProductsIdsInOrder(String orderId);
 }

@@ -60,7 +60,7 @@ public class InMemoryOrderItemRepository implements OrderItemRepository {
     }
 
     @Override
-    public List<OrderItem> getProductsForOrder(String orderId) {
+    public List<OrderItem> getItemsForOrder(String orderId) {
         List<OrderItem> listOfOrderItemsInOrder = new ArrayList<>();
         for(OrderItem item: this.listOfOrderItems){
             if(item.getOrderId().equals(orderId)) {
@@ -68,5 +68,14 @@ public class InMemoryOrderItemRepository implements OrderItemRepository {
             }
         }
         return listOfOrderItemsInOrder;
+    }
+
+    @Override
+    public List<String> getOrderedProductsIdsInOrder(String orderId) {
+        List <String> ids = new ArrayList<>();
+        for(OrderItem item: this.listOfOrderItems) {
+            ids.add(item.getProductId());
+        }
+        return ids;
     }
 }

@@ -1,6 +1,7 @@
 package com.thesis.visageapp.service.impl;
 
 import com.thesis.visageapp.domain.Order;
+import com.thesis.visageapp.domain.OrderItem;
 import com.thesis.visageapp.domain.repository.OrderItemRepository;
 import com.thesis.visageapp.domain.repository.OrderRepository;
 import com.thesis.visageapp.domain.repository.impl.StaticQueryParts;
@@ -14,7 +15,7 @@ import com.thesis.visageapp.service.OrderService;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,6 +88,18 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void changeOrderStatus(String status, String orderId) throws SQLException {
         this.orderRepository.changeOrderStatus(status, orderId);
+    }
+
+    @Override
+    public List<OrderItem> getOrderItemsItselfForOrder(String orderId) {
+        return this.orderItemRepository.getItemsForOrder(orderId);
+    }
+
+    @Override
+    public List<Product> getOrderItemsProductsProductForOrder(String orderId) throws IllegalAccessException {
+        List<String> productsIds = new ArrayList<>();
+        productsIds = this.orderItemRepository.getOrderedProductsIdsInOrder(orderId);
+        return this.productRepository.getProductsWithIds(productsIds);
     }
 
     private Double calculateTotalGrossValue(List<String> productsIds) throws IllegalAccessException {

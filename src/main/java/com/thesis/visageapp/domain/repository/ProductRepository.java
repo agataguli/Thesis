@@ -37,4 +37,6 @@ public interface ProductRepository {
     String removeProductToUserFavProductList(String userId, String productId) throws SQLException;
 
     String checkAreProductsAvailable(Map<String, Integer> groupedByQuantityAndIds);
+
+    List<Product> getProductsWithIds(List<String> productsIds) throws IllegalAccessException;
 }
