@@ -97,11 +97,14 @@ public class StaticQueryParts {
 
     public static final String RESPONSE_CODE_ERROR_INCORRECT_OLD_PASSWORD = "501";
     public static final String RESPONSE_CODE_ERROR_ORDER_NOT_ENOUGH_PRODUCTS = "600_";
+
     public static final String ORDER_STATUS_ACTIVE = "ACTIVE";
+    public static final String ORDER_STATUS_CANCELLED = "CANCELLED";
+    public static final String ORDER_STATUS_DONE = "DONE";
 
     // combinations
     public static String updateQuery(String tableName, String columnName, String newValue, String condition) {
-        return UPDATE + tableName + SET + columnName + " = " + newValue + WHERE + condition;
+        return UPDATE + tableName + SET + columnName + " = '" + newValue + "'" + WHERE + condition;
     }
 
     public static String selectQuery(String tableName, String columnName1, String columnName2, String condition1, String condition2) {

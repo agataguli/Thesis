@@ -33,16 +33,9 @@
                     <p><strong>available: </strong>${product.available}</p>
                     <p><strong>category: </strong>${product.category}</p>
                     <h3><strong>quantity: </strong>${product.quantity}</h3>
-                    <p ng-controller="cartCtrl">
-                        <a href="<spring:url value="/products/changeAvailability?id=${product.productId}" />" class="btn btn-warning btn-large"
-                        ngclick="addToCart('{product.productId}')">
-                            <span class="glyphicon-shopping-productt glyphicon"></span>
-                            Change availability
-                        </a>
-                        <a href="<spring:url value="/cart" />" class="btn btndefault">
-                            <span class="glyphicon-hand-right glyphicon"></span> Go to cart
-                        </a>
-                    </p>
+                    <a href="<spring:url value="/products/changeAvailability?id=${product.productId}" />" class="btn btn-warning btn-large">
+                        <span class="glyphicon-shopping-productt glyphicon"></span> Change availability
+                    </a>
                 </div>
             </div>
         </section>

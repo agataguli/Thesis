@@ -27,10 +27,9 @@
                     <a href="<spring:url value="/delivery/add" />" class="btn btndefault">
                         <span class="glyphicon-hand-left glyphicon"></span> Insert delivery
                     </a>
-                </div>
-                <div>
-                <a href="<c:url value="/logout" />"
-                				class="btn btn-danger btn-mini pull-right"> Logout </a>
+                    <a href="<spring:url value="/orders/all" />" class="btn btndefault">
+                        <span class="glyphicon-hand-left glyphicon"></span> Orders
+                    </a>
                 </div>
             </section>
         </body>

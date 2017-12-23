@@ -1,12 +1,18 @@
 package com.thesis.visageapp.domain.repository;
 
+import com.thesis.visageapp.domain.Order;
+
 import java.sql.SQLException;
 import java.util.List;
 
 public interface OrderRepository {
-    public List getAllOrders();
+    List getAllOrders();
 
-    public String createOrder(String userId, Double totalGrossValue) throws SQLException;
+    String createOrder(String userId, Double totalGrossValue) throws SQLException;
 
-    public List getHistoryOrders(String userId) throws SQLException;
+    List getHistoryOrders(String userId) throws SQLException;
+
+    Order getOrderWithId(String orderId) throws IllegalAccessException;
+
+    void changeOrderStatus(String status, String orderId) throws SQLException;
 }

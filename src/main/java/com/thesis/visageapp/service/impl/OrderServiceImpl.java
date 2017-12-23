@@ -74,6 +74,21 @@ public class OrderServiceImpl implements OrderService {
         return this.orderRepository.getHistoryOrders(userId);
     }
 
+    @Override
+    public List<Order> getAllOrders() throws SQLException {
+        return this.orderRepository.getAllOrders();
+    }
+
+    @Override
+    public Order getOrderWithId(String orderId) throws IllegalAccessException {
+        return this.orderRepository.getOrderWithId(orderId);
+    }
+
+    @Override
+    public void changeOrderStatus(String status, String orderId) throws SQLException {
+        this.orderRepository.changeOrderStatus(status, orderId);
+    }
+
     private Double calculateTotalGrossValue(List<String> productsIds) throws IllegalAccessException {
         Double total = 0.0;
         for (String productId : productsIds) {
