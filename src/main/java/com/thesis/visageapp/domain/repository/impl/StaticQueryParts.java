@@ -177,7 +177,6 @@ public class StaticQueryParts {
 
     public static String getUserHistoryOrders(String userId) {
         return SELECT_ALL_QUERY + ORDER_TAB_NAME + WHERE + FAV_USER_ID +"='" + userId +"'";
-        //SELECT * FROM `orders` WHERE `userId`= ??
     }
 
 }

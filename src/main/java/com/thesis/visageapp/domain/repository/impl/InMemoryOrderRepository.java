@@ -71,7 +71,6 @@ public class InMemoryOrderRepository implements OrderRepository {
 
         try {
             while (rs.next()) {
-                //rs.getString(StaticQueryParts.ORDER_STATUS);
                 order = createOrderByResponse(rs);
                 listOfOrders.add(order);
             }
@@ -79,30 +78,6 @@ public class InMemoryOrderRepository implements OrderRepository {
             e.printStackTrace();
         }
         MysqlConnector.disconnect();
-
-        /*List<Product> listOfFilteredProducts = new ArrayList<>();
-        for(String s: listOfProductIds) {
-            try {
-                p = this.getProductWithId(s);
-                if(p != null) {
-                    listOfFilteredProducts.add(p);
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }*/
         return listOfOrders;
-    }
-
-
-    private Order createOrderbyResponse (ResultSet rs) throws SQLException {
-        Order order = new Order(
-                rs.getString(StaticQueryParts.ORDER_ORDER_ID),
-                rs.getString(StaticQueryParts.ORDER_USER_ID),
-                rs.getDouble(StaticQueryParts.ORDER_GROSS_VALUE),
-                rs.getString(StaticQueryParts.ORDER_STATUS),
-                rs.getInt(StaticQueryParts.ORDER_DATE)
-        );
-        return order;
     }
 }
