@@ -12,7 +12,7 @@
     <section>
                 <p>
                     <a href="<spring:url value="/" />" class="btn btndefault">
-                        <span class="glyphicon-hand-left glyphicon"></span> Back
+                        <span class="glyphicon-hand-left glyphicon"></span> Back to home page
                     </a>
                 </p>
                 </section>
@@ -32,15 +32,22 @@
                         <p>Status: ${order.status}</p>
                         <p>Date: ${order.date}</p>
                         <p>Gross value: ${order.orderGrossValue}</p>
-                        <a href="<spring:url value="/orders/getProductsForOrder?id=${order.orderId}" />" class="btn btn-warning btn-large">
-                            <span class="glyphicon-shopping-product glyphicon"></span> Got to orderer products
-                        </a>
-                        <a href="<spring:url value="/orders/changeStatus/DONE/${order.orderId}" />" class="btn btn-warning btn-large">
-                            <span class="glyphicon-shopping-product glyphicon"></span> Change status to DONE
-                        </a>
-                        <a href="<spring:url value="/orders/changeStatus/CANCELLED/${order.orderId}" />" class="btn btn-warning btn-large">
-                            <span class="glyphicon-shopping-product glyphicon"></span> Change status to CANCELLED
-                        </a>
+
+                        <div>
+                            <a href="<spring:url value="/order/items/getProductsForOrder/${order.orderId}" />" class="btn btn-warning btn-large">
+                                <span class="glyphicon-shopping-product glyphicon"></span> Go to ordered products
+                            </a>
+                        </div>
+                        <div>
+                            <a href="<spring:url value="/orders/changeStatus/DONE/${order.orderId}" />" class="btn btn-warning btn-large">
+                                <span class="glyphicon-shopping-product glyphicon"></span> Change status to DONE
+                            </a>
+                        </div>
+                        <div>
+                            <a href="<spring:url value="/orders/changeStatus/CANCELLED/${order.orderId}" />" class="btn btn-warning btn-large">
+                                <span class="glyphicon-shopping-product glyphicon"></span> Change status to CANCELLED
+                            </a>
+                        </div>
                 </div>
             </div>
         </section>

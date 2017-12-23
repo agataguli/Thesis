@@ -93,7 +93,7 @@ public class InMemoryOrderRepository implements OrderRepository {
     @Override
     public Order getOrderWithId(String orderId) throws IllegalAccessException {
         Order orderById = null;
-        for (Order order : listOfOrders) {
+        for (Order order : this.listOfOrders) {
             if (order != null && order.getOrderId() != null && order.getOrderId().equals(orderId)) {
                 orderById = order;
                 break;

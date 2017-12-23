@@ -50,7 +50,7 @@ public class StaticQueryParts {
     public final static String ORDERITEM_ORDERITEM_ID = "orderItemId";
     public final static String ORDERITEM_PRODUCT_ID = "productId";
     public final static String ORDERITEM_GROSS_VALUE = "itemGrossValue";
-    public final static String ORDERITEM_ORDER_ID = "itemGrossValue";
+    public final static String ORDERITEM_ORDER_ID = "orderId";
 
     // table products
     public final static String PROD_TAB_NAME = "products";

@@ -13,7 +13,7 @@
 	<section>
 		<p>
 			<a href="<spring:url value="/" />" class="btn btndefault"> <span
-				class="glyphicon-hand-left glyphicon"></span> Back
+				class="glyphicon-hand-left glyphicon"></span> Back to home page
 			</a>
 		</p>
 	</section>

@@ -12,7 +12,7 @@
     <section>
             <p>
                 <a href="<spring:url value="/" />" class="btn btndefault">
-                    <span class="glyphicon-hand-left glyphicon"></span> Back
+                    <span class="glyphicon-hand-left glyphicon"></span> Back to home page
                 </a>
             </p>
             <p>
@@ -41,7 +41,7 @@
                                 <p>available: ${product.available}</p>
                                 <p>
                                     <a href=" <spring:url value="/products/product?id=${product.productId}" /> " class="btn btn-primary">
-                                    <span class="glyphicon-info-sign glyphicon"/></span> Details
+                                        <span class="glyphicon-info-sign glyphicon"/></span> Details
                                     </a>
                                 </p>
                             </div>

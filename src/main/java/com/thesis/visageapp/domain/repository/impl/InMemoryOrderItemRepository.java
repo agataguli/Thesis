@@ -1,6 +1,8 @@
 package com.thesis.visageapp.domain.repository.impl;
 
+import com.thesis.visageapp.domain.Order;
 import com.thesis.visageapp.domain.OrderItem;
+import com.thesis.visageapp.domain.Product;
 import com.thesis.visageapp.domain.repository.OrderItemRepository;
 import org.springframework.stereotype.Repository;
 
@@ -41,11 +43,6 @@ public class InMemoryOrderItemRepository implements OrderItemRepository {
     }
 
     @Override
-    public List getAllOrderItem() {
-        return this.listOfOrderItems;
-    }
-
-    @Override
     public String createOrderItem(String productId, Double itemGrossValue, String orderId) throws SQLException {
         MysqlConnector.connect();
         String orderItemId = String.valueOf(UUID.randomUUID());
@@ -55,7 +52,21 @@ public class InMemoryOrderItemRepository implements OrderItemRepository {
         String addQuery = StaticQueryParts.insertQuery(StaticQueryParts.ORDERITEM_TAB_NAME,(supplierNames));
         MysqlConnector.executeOnDatabase(addQuery);
         return orderItemId;
+    }
 
-}
+    @Override
+    public List<OrderItem> getAllItemsForAllOrders() {
+        return this.listOfOrderItems;
+    }
 
+    @Override
+    public List<OrderItem> getProductsForOrder(String orderId) {
+        List<OrderItem> listOfOrderItemsInOrder = new ArrayList<>();
+        for(OrderItem item: this.listOfOrderItems){
+            if(item.getOrderId().equals(orderId)) {
+                listOfOrderItemsInOrder.add(item);
+            }
+        }
+        return listOfOrderItemsInOrder;
+    }
 }
