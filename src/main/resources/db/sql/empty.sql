@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 17 Gru 2017, 14:59
+-- Czas generowania: 24 Gru 2017, 00:13
 -- Wersja serwera: 10.1.21-MariaDB
 -- Wersja PHP: 5.6.30
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Baza danych: `test3`
+-- Baza danych: `empty`
 --
 
 -- --------------------------------------------------------
@@ -38,14 +38,6 @@ CREATE TABLE `admins` (
   `active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
---
--- Zrzut danych tabeli `admins`
---
-
-INSERT INTO `admins` (`adminId`, `login`, `password`, `permissionStatus`, `name`, `surname`, `email`, `phoneNumber`, `active`) VALUES
-('adminagata', 'adminagata', '[B@74a14482', 'admin', 'Agata', 'Kołtun', 'agataguli@gmail.com', '737409946', 1),
-('adminewelina', 'adminewelina', '[B@74a14482', 'admin', 'Ewelina', 'Mysiak', 'ewelinamysiak@jakasdomena.com', '123123123', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -57,13 +49,6 @@ CREATE TABLE `favorites` (
   `userId` varchar(64) COLLATE utf8_polish_ci NOT NULL,
   `productId` varchar(64) COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
-
---
--- Zrzut danych tabeli `favorites`
---
-
-INSERT INTO `favorites` (`favoriteId`, `userId`, `productId`) VALUES
-('1', '9a5face3-69f9-4f76-b4bf-fbadca5babea', '90010137715');
 
 -- --------------------------------------------------------
 
@@ -111,15 +96,6 @@ CREATE TABLE `products` (
   `available` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
---
--- Zrzut danych tabeli `products`
---
-
-INSERT INTO `products` (`productId`, `name`, `category`, `brand`, `grossValue`, `netValue`, `description`, `quantity`, `imageLink`, `available`) VALUES
-('90010137715', 'Podświetlane lustro wizażysty, 90x90cm', 'WYPOSAŻENIE', 'IKEA', 256.5, 200, 'Lustro z 12 żarówkami LED. Zapewnia wysoki komfort pracy każdemu wizażyście. ', 40, 'https://c.allegroimg.com/s512/01844c/bf69dc3e4c109d000911d0d2f08c', 0),
-('90010173119', 'Jeffree Stare Mirror Check', 'ATTRIBUTES', 'JSTARR', 139.99, 100, 'Oficjalne pozłacane 24K złotem lusterko podręczne z kolekcji Better than Sex w wykonaniu Jeffre Starr, gwiazdy amerykańskiego youtube makijażowego! ', 12, 'http://static5.perfumesco.pl/img/388/44021.jpg', 0),
-('90010174011', 'MAXINECZKA FOUNDATION BRUSH M01X', 'BRUSHES', 'MAXINECZKA', 99.99, 76.99, 'Pędzel promowany przez najsłynniejszą polską makijażystkę, gwiazdę Youtube\'a Maxineczkę. Pędzel przeznaczony jest do aplikacji podkładu. Jest wykonany z naturalnego włosia - włosia czesanego z japońskiej kozy.', 9, 'https://static2.mintishop.pl/pol_pm_M-Brush-by-Maxineczka-zestaw-7-pedzli-ORIGINAL-10903_3.jpg', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -141,14 +117,6 @@ CREATE TABLE `users` (
   `addressDetails` varchar(24) COLLATE utf8_polish_ci NOT NULL,
   `active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
-
---
--- Zrzut danych tabeli `users`
---
-
-INSERT INTO `users` (`userId`, `login`, `password`, `name`, `surname`, `email`, `phoneNumber`, `country`, `postCode`, `city`, `street`, `addressDetails`, `active`) VALUES
-('8b00fc65-0ec3-47f8-9d30-e4d68f8cedb9', 'agatauser', '337UUpo9A890NgAhjzBFCvAsu8k=', 'Agata', 'Kołtun', 'agataguli@gmail.com', '123978456', 'Polska', '22-300 ', 'Krasnystaw ', 'Nijaka', '123', 1),
-('9a5face3-69f9-4f76-b4bf-fbadca5babea', 'testuser', '337UUpo9A890NgAhjzBFCvAsu8k=', 'Test', 'Test', 'tests@gmaill.com', '123456789', 'Polska', '22-300 ', 'Krasnystaw ', 'Testowa', '123', 1);
 
 --
 -- Indeksy dla zrzutów tabel
