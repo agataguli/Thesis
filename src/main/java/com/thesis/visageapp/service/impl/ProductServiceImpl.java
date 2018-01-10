@@ -19,6 +19,18 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
+    public void changeAvailability(String productId) throws SQLException {
+        try {
+            Product productById = this.productRepository.getProductWithId(productId);
+            productById.changeAvailability();
+            this.productRepository.changeAvailability(productById.isAvailable(),
+                    productById.getProductId());
+        } catch (IllegalAccessException e) {
+            throw new IllegalArgumentException("Cannot change Availability");
+        }
+    }
+
+    @Override
     public List<Product> getAllProducts() {
         return this.productRepository.getAllProducts();
     }
@@ -53,16 +65,7 @@ public class ProductServiceImpl implements ProductService {
         // TODO: implement this ordering product method
     }
 
-    @Override
-    public void changeAvailability(String productId) throws SQLException {
-        try {
-            Product productById = this.productRepository.getProductWithId(productId);
-            productById.changeAvailability();
-            this.productRepository.changeAvailability(productById.isAvailable(), productById.getProductId());
-        } catch (IllegalAccessException e) {
-            throw new IllegalArgumentException("Cannot change Availability");
-        }
-    }
+
 
     @Override
     public void updateQuantityByDelivered(String productId, Integer quantity) {

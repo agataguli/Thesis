@@ -180,7 +180,7 @@ public class Product {
     public List getAttributesValues() {
         List values = new ArrayList();
         values.add(productId); values.add(name); values.add(category); values.add(brand); values.add(grossValue);
-        values.add(netValue); values.add(description); values.add(quantity); values.add(available);
+        values.add(netValue); values.add(description); values.add(quantity); values.add(imageLink); values.add(available);
         return values;
     }
 }

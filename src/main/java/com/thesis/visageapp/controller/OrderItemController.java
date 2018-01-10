@@ -24,9 +24,9 @@ public class OrderItemController {
         return "orderItems";
     }
 
-    @RequestMapping(value = "/getItemsForOrder/{orderId}")
-    public String getProductsForOrder(@PathVariable(value = "orderId") String orderId, Model model) throws SQLException {
-        model.addAttribute("orderItems", orderItemService.getProductsForOrder(orderId));
-        return "orderItems";
+    @RequestMapping(value = "/getProductsForOrder/{orderId}")
+    public String getProductsForOrder(@PathVariable(value = "orderId") String orderId, Model model) throws SQLException, IllegalAccessException {
+        model.addAttribute("products", orderItemService.getProductsForOrder(orderId));
+        return "products";
     }
 }

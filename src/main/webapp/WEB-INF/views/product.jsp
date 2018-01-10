@@ -33,7 +33,8 @@
                     <p><strong>available: </strong>${product.available}</p>
                     <p><strong>category: </strong>${product.category}</p>
                     <h3><strong>quantity: </strong>${product.quantity}</h3>
-                    <a href="<spring:url value="/products/changeAvailability?id=${product.productId}" />" class="btn btn-warning btn-large">
+                    <a href="<spring:url value="/products/changeAvailability?id=${product.productId}" />"
+                      class="btn btn-warning btn-large">
                         <span class="glyphicon-shopping-productt glyphicon"></span> Change availability
                     </a>
                 </div>

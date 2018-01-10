@@ -20,7 +20,7 @@ public class OrderRestController {
     @Autowired
     private OrderService orderService;
 
-    @RequestMapping("/order/{productId}/{quantity}")
+    @RequestMapping(value = "/order/{productId}/{quantity}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public String processOrder(@PathVariable(value = "productId") String productId, @PathVariable(value = "quantity") int quantity) throws SQLException {
         orderService.processOrder(productId, quantity);

@@ -32,20 +32,28 @@
                         <p>Status: ${order.status}</p>
                         <p>Date: ${order.date}</p>
                         <p>Gross value: ${order.orderGrossValue}</p>
-
+                        <div></div>
                         <div>
                             <a href="<spring:url value="/order/items/getProductsForOrder/${order.orderId}" />" class="btn btn-warning btn-large">
                                 <span class="glyphicon-shopping-product glyphicon"></span> Go to ordered products
                             </a>
                         </div>
+                        <div></div>
                         <div>
                             <a href="<spring:url value="/orders/changeStatus/DONE/${order.orderId}" />" class="btn btn-warning btn-large">
                                 <span class="glyphicon-shopping-product glyphicon"></span> Change status to DONE
                             </a>
                         </div>
+                        <div></div>
                         <div>
                             <a href="<spring:url value="/orders/changeStatus/CANCELLED/${order.orderId}" />" class="btn btn-warning btn-large">
                                 <span class="glyphicon-shopping-product glyphicon"></span> Change status to CANCELLED
+                            </a>
+                        </div>
+                        <div></div>
+                        <div>
+                            <a href="<spring:url value="/users/user?id=${order.userId}" />" class="btn btn-warning btn-large">
+                                <span class="glyphicon-shopping-product glyphicon"></span> Go to clients details
                             </a>
                         </div>
                 </div>

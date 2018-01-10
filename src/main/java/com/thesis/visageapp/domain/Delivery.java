@@ -6,41 +6,30 @@ import java.io.File;
 import java.util.Date;
 
 public class Delivery {
-    String deliveryId;
-    Date date;
-    MultipartFile file;
+    private String productId;
+    private int quantity;
 
-
-    public Delivery(String deliveryId, Date date, MultipartFile file) {
-        this.deliveryId = deliveryId;
-        this.date = date;
-        this.file = file;
+    public Delivery(String productId, int quantity) {
+        this.productId = productId;
+        this.quantity = quantity;
     }
 
     public Delivery() {
     }
 
-    public String getDeliveryId() {
-        return deliveryId;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setDeliveryId(String deliveryId) {
-        this.deliveryId = deliveryId;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
-    public Date getDate() {
-        return date;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    public void setFile(MultipartFile file) {
-        this.file = file;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

@@ -1,6 +1,7 @@
 package com.thesis.visageapp.service.impl;
 
 import com.thesis.visageapp.domain.OrderItem;
+import com.thesis.visageapp.domain.Product;
 import com.thesis.visageapp.domain.repository.OrderItemRepository;
 import com.thesis.visageapp.domain.repository.OrderRepository;
 import com.thesis.visageapp.domain.repository.ProductRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,7 +32,12 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public List<OrderItem> getProductsForOrder(String orderId) {
-        return this.orderItemRepository.getItemsForOrder(orderId);
+    public List<Product> getProductsForOrder(String orderId) throws IllegalAccessException {
+        List<Product> orderedProducts = new ArrayList<>();
+        List<OrderItem> orderedItems = this.orderItemRepository.getItemsForOrder(orderId);
+        for(OrderItem orderItem: orderedItems) {
+            orderedProducts.add(this.productRepository.getProductWithId(orderItem.getProductId()));
+        }
+        return orderedProducts;
     }
 }

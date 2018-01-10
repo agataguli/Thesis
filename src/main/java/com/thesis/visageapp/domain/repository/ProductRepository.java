@@ -39,4 +39,6 @@ public interface ProductRepository {
     String checkAreProductsAvailable(Map<String, Integer> groupedByQuantityAndIds);
 
     List<Product> getProductsWithIds(List<String> productsIds) throws IllegalAccessException;
+
+    void updateProductQuantity(int quantity, String productId) throws IllegalAccessException, SQLException;
 }

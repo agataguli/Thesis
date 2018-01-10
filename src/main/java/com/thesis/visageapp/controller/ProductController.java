@@ -23,6 +23,13 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @RequestMapping(value = "/product", method = RequestMethod.GET)
+    public String getProductById(@RequestParam("id") String productId, Model model)
+            throws IllegalAccessException {
+        model.addAttribute("product", productService.getProductWithId(productId));
+        return "product";
+    }
+
     @RequestMapping(value = "/{category}", method = RequestMethod.GET)
     public String getProductsByCategory(Model model, @PathVariable("category") String productCategory) {
         model.addAttribute("products", productService.getProductsWithCategory(productCategory));
@@ -62,12 +69,6 @@ public class ProductController {
     public String getProductsByFilter(@MatrixVariable(pathVar = "ByCriteria") Map<String, List<String>> filterParams, Model model) {
         model.addAttribute("products", productService.getProductsWithFilter(filterParams));
         return "products";
-    }
-
-    @RequestMapping(value = "/product", method = RequestMethod.GET)
-    public String getProductById(@RequestParam("id") String productId, Model model) throws IllegalAccessException {
-        model.addAttribute("product", productService.getProductWithId(productId));
-        return "product";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)

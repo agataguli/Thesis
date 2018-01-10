@@ -15,4 +15,6 @@ public interface OrderRepository {
     Order getOrderWithId(String orderId) throws IllegalAccessException;
 
     void changeOrderStatus(String status, String orderId) throws SQLException;
+
+    List<Order> getAllOrdersWithStatus(String status);
 }

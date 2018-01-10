@@ -117,4 +117,15 @@ public class InMemoryOrderRepository implements OrderRepository {
             new IllegalArgumentException("Cannot change order: " + orderId + ", to status: " + status);
         }
     }
+
+    @Override
+    public List<Order> getAllOrdersWithStatus(String status) {
+        List<Order> withStatus = new ArrayList<>();
+        for(Order order: this.listOfOrders) {
+            if(order.getStatus().equalsIgnoreCase(status)) {
+                withStatus.add(order);
+            }
+        }
+        return withStatus;
+    }
 }

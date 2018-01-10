@@ -12,6 +12,17 @@
         <div class="container">
             <h1>orders</hi>
         </div>
+        <h2>
+            <a href="<spring:url value="/orders/all/status/ACTIVE" />" class="btn btn-warning btn-large">
+                <span class="glyphicon-shopping-product glyphicon"></span> only ACTIVE
+            </a>
+            <a href="<spring:url value="/orders/all/status/DONE" />" class="btn btn-warning btn-large">
+                <span class="glyphicon-shopping-product glyphicon"></span> only DONE
+            </a>
+            <a href="<spring:url value="/orders/all/status/CANCELLED" />" class="btn btn-warning btn-large">
+                <span class="glyphicon-shopping-product glyphicon"></span> only CANCELLED
+            </a>
+        </h2>
     </div>
 </section>
 

@@ -26,6 +26,12 @@ public class OrderController {
         return "orders";
     }
 
+    @RequestMapping(value = "/all/status/{status}", method = RequestMethod.GET)
+    public String listOrdersWithStatus(@PathVariable("status") String status, Model model) {
+        model.addAttribute("orders", orderService.getAllOrdersWithStatus(status));
+        return "orders";
+    }
+
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public String getOrderWithId(@RequestParam("id") String orderId, Model model) throws IllegalAccessException {
         model.addAttribute("order", orderService.getOrderWithId(orderId));

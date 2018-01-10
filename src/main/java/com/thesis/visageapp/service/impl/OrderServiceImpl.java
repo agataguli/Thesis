@@ -33,12 +33,25 @@ public class OrderServiceImpl implements OrderService {
     private OrderItemRepository orderItemRepository;
 
     @Override
+    public List<Product> getOrderItemsProductsProductForOrder(String orderId) throws IllegalAccessException {
+        List<String> productsIds = new ArrayList<>();
+        productsIds = this.orderItemRepository.getOrderedProductsIdsInOrder(orderId);
+        return this.productRepository.getProductsWithIds(productsIds);
+    }
+
+    @Override
+    public List<Order> getAllOrdersWithStatus(String status) {
+        return this.orderRepository.getAllOrdersWithStatus(status);
+    }
+
+    @Override
     public void processOrder(String productId, int count) throws SQLException {
 
         try {
             Product productById = this.productRepository.getProductWithId(productId);
             if (productById.getQuantity() < count) {
-                throw new IllegalArgumentException("Quantity of product: " + productId + "is out off stock, current quantity:" + productById.getQuantity());
+                throw new IllegalArgumentException("Quantity of product: " + productId
+                        + "is out off stock, current quantity:" + productById.getQuantity());
             }
             productById.setQuantity(productById.getQuantity() - count);
             this.productRepository.changeQuantity(productById.getQuantity(), productById.getProductId());
@@ -65,7 +78,8 @@ public class OrderServiceImpl implements OrderService {
             }
         });
         for (String productId : productsIds) {
-            this.orderItemRepository.createOrderItem(productId, this.productRepository.getProductWithId(productId).getGrossValue(), orderId);
+            this.orderItemRepository.createOrderItem(productId,
+                    this.productRepository.getProductWithId(productId).getGrossValue(), orderId);
         }
         return response + "_" + orderId;
     }
@@ -74,6 +88,10 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> getHistoryOrders(String userId) throws SQLException {
         return this.orderRepository.getHistoryOrders(userId);
     }
+
+
+
+
 
     @Override
     public List<Order> getAllOrders() throws SQLException {
@@ -95,12 +113,7 @@ public class OrderServiceImpl implements OrderService {
         return this.orderItemRepository.getItemsForOrder(orderId);
     }
 
-    @Override
-    public List<Product> getOrderItemsProductsProductForOrder(String orderId) throws IllegalAccessException {
-        List<String> productsIds = new ArrayList<>();
-        productsIds = this.orderItemRepository.getOrderedProductsIdsInOrder(orderId);
-        return this.productRepository.getProductsWithIds(productsIds);
-    }
+
 
     private Double calculateTotalGrossValue(List<String> productsIds) throws IllegalAccessException {
         Double total = 0.0;

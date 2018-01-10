@@ -19,7 +19,8 @@ public class ProductRestController {
     @Autowired
     private ProductService productService;
 
-    @RequestMapping(value = "/allM", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/allM", method = RequestMethod.GET,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<Product> listProductsM(Model model) {
         return productService.getAllProducts();
     }

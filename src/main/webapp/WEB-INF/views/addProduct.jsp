@@ -96,6 +96,15 @@
 										class="form:input-large" />
 								</div>
 							</div>
+							<div class="form-group">
+                            <label class="control-label col-lg-2 col-lg-2" for="quantity">
+                                <spring:message code="addProduct.form.link.label" />
+                            </label>
+                            <div class="col-lg-10">
+                                <form:input id="imageLink" path="imageLink" type="text"
+                                    class="form:input-large" />
+                            </div>
+                        </div>
 
 							<div class="form-group">
 								<div class="col-lg-offset-2 col-lg-10">

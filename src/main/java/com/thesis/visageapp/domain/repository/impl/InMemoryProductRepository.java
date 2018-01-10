@@ -123,15 +123,27 @@ public class InMemoryProductRepository implements ProductRepository {
         } catch (IllegalAccessException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
-
     }
 
     @Override
     public void changeAvailability(boolean available, String productId) throws SQLException {
+        String avai = "0";
+        if(available) avai = "1";
         String updateQuery = StaticQueryParts.updateQuery(StaticQueryParts.PROD_TAB_NAME, StaticQueryParts.PROD_AVAILABLE,
-                String.valueOf(available), StaticQueryParts.buildCondition(StaticQueryParts.PROD_PRODUCT_ID, productId));
+                avai, StaticQueryParts.buildCondition(StaticQueryParts.PROD_PRODUCT_ID, productId));
         MysqlConnector.executeOnDatabase(updateQuery);
     }
+
+    private void updateProductData(String productId, int quantity, String brand) {
+        for(Product product : this.listOfProducts) {
+            if(product.getProductId().equals(productId)) {
+                if(quantity>0){product.setQuantity(quantity);}
+                else{product.setBrand(brand);}
+                return;
+            }
+        }
+    }
+
 
     @Override
     public void changeQuantity(int quantity, String productId) throws SQLException {
@@ -241,5 +253,13 @@ public class InMemoryProductRepository implements ProductRepository {
             }
         }
         return products;
+    }
+
+    @Override
+    public void updateProductQuantity(int quantity, String productId) throws IllegalAccessException, SQLException {
+        Product product = this.getProductWithId(productId);
+        product.setQuantity(quantity + product.getQuantity());
+        this.changeQuantity(product.getQuantity(), productId);
+        this.updateProductData(productId, product.getQuantity(), null);
     }
 }

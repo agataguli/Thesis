@@ -24,4 +24,6 @@ public interface OrderService {
     List<OrderItem> getOrderItemsItselfForOrder(String orderId);
 
     List<Product> getOrderItemsProductsProductForOrder(String orderId) throws IllegalAccessException;
+
+    Object getAllOrdersWithStatus(String status);
 }
