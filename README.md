@@ -1,4 +1,4 @@
-# VisageApp
+# VisageApp - DEPRECATED
 
 ## Purpose
 
